@@ -1,0 +1,22 @@
+$palette: (
+  primary: red,
+  secondary: green,
+  tertiary: yellow,
+  accent: green
+);
+
+@function lighten-action($color, $value) {
+  @return lighten($color, percentage($value));
+}
+
+$palette-variations: (
+    lighter: (
+        depth: 4,
+        aliases: ("light", "lightest"),
+        label: 10,
+        step: .05,
+        base: 0,
+        action: lighten-action
+    )
+);
+

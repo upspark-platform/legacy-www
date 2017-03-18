@@ -1,0 +1,8 @@
+@import "../variables/palette";
+@import "../mixins/colors";
+
+@each $name, $color in $palette {
+  @include emit-palette(".text-#{$name}", $name, $color, $palette-variations, "color");
+  @include emit-palette(".bg-#{$name}", $name, $color, $palette-variations, "background-color");
+  @include emit-palette(".fill-#{$name}", $name, $color, $palette-variations, "background-color", "color");
+}
