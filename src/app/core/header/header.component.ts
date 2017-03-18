@@ -9,5 +9,7 @@ export class HeaderComponent {
 
     @Input()
     private title:string = META.TITLE;
+    @Input()
+    private theme:string;
 
 }

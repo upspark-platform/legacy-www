@@ -11,9 +11,9 @@ $palette: (
 
 $palette-variations: (
     lighter: (
-        depth: 4,
-        aliases: ("light", "lightest"),
-        label: 10,
+        depth: 5,
+        aliases: ("lighten", "lighter", "lightest"),
+        label: 100,
         step: .05,
         base: 0,
         action: lighten-action
