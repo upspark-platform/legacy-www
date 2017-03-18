@@ -42,8 +42,8 @@ module.exports = function () {
             modules: [
                 'node_modules',
                 path.join(__dirname, '..', 'src'),
-                path.join(__dirname, '..', 'src', 'app', 'core', 'assets'),
-                path.join(__dirname, '..', 'src', 'static')
+                path.join(__dirname, '..', 'src', 'assets'),
+                path.join(__dirname, '..', 'src', 'assets', 'static')
             ],
         },
         module: {
