@@ -1,0 +1,38 @@
+@import "../variables/layout";
+
+.push-top {
+  margin-top: $content-margin;
+}
+.push-left {
+  margin-left: $content-margin;
+}
+.push-right {
+  margin-right: $content-margin;
+}
+.push-bottom {
+  margin-bottom: $content-margin;
+}
+.push-content {
+  margin: $content-margin;
+}
+
+.pull-top {
+  padding-top: $content-padding;
+}
+.pull-left {
+  padding-left: $content-padding;
+}
+.pull-right {
+  padding-right: $content-padding;
+}
+.pull-bottom {
+  padding-bottom: $content-padding;
+}
+.pull-content {
+  padding: $content-padding;
+}
+
+.content {
+  margin: $content-margin/2;
+  padding: $content-padding/2;
+}

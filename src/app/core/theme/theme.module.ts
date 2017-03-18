@@ -17,5 +17,5 @@ import {ThemeFillDirective} from "./theme.directive";
     ]
 })
 export class ThemeModule {
-    
+
 }
