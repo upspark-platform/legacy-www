@@ -15,4 +15,4 @@ import {HeaderComponent} from "./header/header.component";
     providers: [
     ]
 })
-export class CoreModule {}
+export class SharedModule {}

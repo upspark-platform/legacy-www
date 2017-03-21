@@ -15,7 +15,7 @@ module.exports = function() {
         plugins: [
             new CopyWebpackPlugin([
                 {
-                    from: 'src/assets/static/'
+                    from: 'src/assets/www/'
                 }
             ]),
             new webpack.LoaderOptionsPlugin({

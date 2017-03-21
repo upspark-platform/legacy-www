@@ -14,7 +14,7 @@ module.exports = function () {
         },
         devServer: {
             stats: { colors: true },
-            contentBase: path.join(__dirname, '..', 'src', 'assets', 'static'),
+            contentBase: path.join(__dirname, '..', 'src', 'assets', 'www'),
             historyApiFallback: true
         },
         devtool: 'cheap-module-source-map',

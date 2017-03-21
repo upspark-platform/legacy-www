@@ -4,12 +4,12 @@ import {AppComponent}  from './app.component';
 import {RouterModule} from "@angular/router";
 import {LandingModule} from "./landing/landing.module";
 import {DownloadsModule} from "./downloads/downloads.module";
-import {CoreModule} from "./core/core-module";
+import {SharedModule} from "./shared/shared-module";
 
 @NgModule({
     imports: [
         BrowserModule,
-        CoreModule,
+        SharedModule,
         LandingModule,
         DownloadsModule,
         RouterModule.forRoot([])
