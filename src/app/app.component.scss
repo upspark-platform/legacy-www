@@ -1,3 +1,13 @@
 @import "~vendor/bootstrap/styles/google-fonts";
 @import "~vendor/bootstrap/styles/toolkit-startup";
 @import "~vendor/bootstrap/styles/application-startup";
+
+.app-header {
+  background-image: url(~image/home/banner.jpg);
+}
+.app-icon {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-image: url(~image/icon_64.png);
+}
