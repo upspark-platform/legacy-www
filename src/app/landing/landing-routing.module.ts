@@ -7,7 +7,12 @@ import {LandingComponent} from "./landing.component";
         RouterModule.forChild([
             {
                 path: '',
-                component: LandingComponent
+                component: LandingComponent,
+                data: {
+                    meta: {
+                        title: 'Upspark - The command runner for your desktop.',
+                    }
+                }
             },
         ])
     ],

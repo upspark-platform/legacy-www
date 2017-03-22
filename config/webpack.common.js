@@ -87,7 +87,7 @@ module.exports = function () {
             }),
 
             new HtmlWebpackPlugin({
-                template: 'src/main.html',
+                template: 'src/main.ejs',
                 filename: 'index.html'
             })
         ],
