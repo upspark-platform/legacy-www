@@ -1,0 +1,142 @@
+:host {
+  width:100%;
+  height: 400px;
+  background: rgba(32, 32, 32, 0.8);
+  display: block;
+  color: white;
+  box-shadow: 10px 10px 5px #888888;
+}
+
+.runner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 20px 20px 20px 20px;
+  flex-direction: column;
+}
+
+.logo {
+  background-image: url(~image/icon_64.png);
+  background-size: 32px 32px;
+  width: 32px;
+  height: 32px;
+  opacity: .6;
+}
+
+.action {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  font-size: 1.5em;
+
+  .spacer {
+    flex-grow:1;
+  }
+
+  .command {
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  .args {
+    flex-grow: 1;
+    display: flex;
+  }
+
+  .command-arg {
+    margin-left: 5px;
+    color: #c3c8e2;
+    white-space: pre;
+  }
+
+  .response {
+    width: 20%;
+    margin-top: -20px;
+    display: flex;
+
+    .response-content {
+      white-space: pre;
+      display:inline-block;
+      line-height: 20px;
+    }
+
+    .response-list {
+      display: flex;
+      flex-direction: column;
+      min-width: 100px;
+      align-items: flex-start;
+    }
+
+  }
+
+}
+
+.log-message {
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 1em;
+  color: #b4b4b4;
+  text-shadow: rgba(248, 253, 255, 0.4) 1px 1px 1px;
+  width: auto;
+}
+
+.log-message-label {
+  display:flex;
+  flex-direction: column;
+}
+
+.log-message-status {
+  background: #1888ff;
+  width: 100%;
+  height: 2px;
+  position: relative;
+
+  &:not(.log-message-status--loading) .bar {
+    display: none;
+  }
+
+
+}
+
+.log-message-title {
+  display: flex;
+  width: auto;
+  margin-top: 10px;
+
+}
+.log-message-type {
+  margin-right: 5px;
+  color: #0e67fb;
+}
+
+.log-message-status--loading {
+  background-color: #fdba2c;
+}
+
+.bar {
+  content: "";
+  display: inline;
+  position: absolute;
+  width: 0;
+  height: 100%;
+  left: 50%;
+  text-align: center;
+}
+.bar:nth-child(1) {
+  background-color: #da4733;
+  animation: loading 1s linear infinite;
+}
+.bar:nth-child(2) {
+  background-color: #3b78e7;
+  animation: loading 1s linear .3s infinite;
+}
+.bar:nth-child(3) {
+  background-color: #fdba2c;
+  animation: loading 1s linear .6s infinite;
+}
+@keyframes loading {
+  from {left: 50%; width: 0;z-index:100;}
+  33.3333% {left: 0; width: 100%;z-index: 10;}
+  to {left: 0; width: 100%;}
+}

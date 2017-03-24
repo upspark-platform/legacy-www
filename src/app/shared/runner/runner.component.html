@@ -1,0 +1,47 @@
+<div class="runner">
+    <div class="logo"></div>
+
+    <div class="action">
+
+        <div class="command">{{command}}</div>
+
+        <div class="args">
+            <div class="command-arg" *ngFor="let arg of args" [innerHTML]="arg"></div>
+        </div>
+
+
+        <div class="response" *ngIf="output">
+            <div class="spacer"></div>
+
+            <div class="response-list">
+                <div class="response-content" *ngFor="let out of output" [innerHTML]="out.output"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="log">
+
+        <div class="log-message">
+
+            <div class="log-message-title" *ngFor="let out of log">
+                <div class="log-message-type">
+                    {{out.type}}
+                </div>
+                <div class="log-message-label">
+                    <div>
+                        {{out.title}}
+                    </div>
+                    <div class="log-message-status" [class.log-message-status--loading]="out.loading">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

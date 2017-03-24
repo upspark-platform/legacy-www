@@ -1,16 +1,19 @@
 import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 import {HeaderComponent} from "./header/header.component";
+import {RunnerComponent} from "./runner/runner.component";
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        HeaderComponent
+        HeaderComponent,
+        RunnerComponent
     ],
     exports: [
-        HeaderComponent
+        HeaderComponent,
+        RunnerComponent
     ],
     providers: [
     ]
