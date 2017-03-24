@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Command} from "./command";
 import {CommandArgument} from "./command-argument";
 import {CommandLog} from "./command-log";
@@ -9,27 +9,7 @@ import {CommandOutput} from "./command-out";
     templateUrl: './runner.component.html',
     styleUrls: ["./runner.component.scss"]
 })
-export class RunnerComponent {
-
-    constructor() {
-
-        this.command = 'xxxx';
-
-        this.args = [
-            'aaa',
-            'bbbb'
-        ];
-
-        this.output = [
-            new CommandOutput('xxx'),
-            new CommandOutput('zyyzzy')
-        ];
-
-        this.log = [
-            new CommandLog("#", "prior", true, false),
-            new CommandLog(">", "xxxx", false, false)
-        ];
-    }
+export class RunnerComponent implements OnInit {
 
     public command:string = '';
     public log:CommandLog[] = [];
@@ -52,6 +32,12 @@ export class RunnerComponent {
             )
         ])
 
-    ]
+    ];
+
+    ngOnInit() {
+        setTimeout(() => {
+            
+        }, 5000);
+    }
 
 }

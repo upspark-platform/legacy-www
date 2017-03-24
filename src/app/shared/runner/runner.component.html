@@ -33,7 +33,9 @@
                     <div>
                         {{out.title}}
                     </div>
-                    <div class="log-message-status" [class.log-message-status--loading]="out.loading">
+                    <div class="log-message-status"
+                         [class.log-message-status--error]="out.error"
+                         [class.log-message-status--loading]="out.loading">
                         <div class="bar"></div>
                         <div class="bar"></div>
                         <div class="bar"></div>
