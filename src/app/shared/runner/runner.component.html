@@ -1,20 +1,20 @@
 <div class="runner">
-    <div class="logo"></div>
+    <!--<div class="logo"></div>-->
 
     <div class="action">
 
         <div class="command">{{command}}</div>
 
-        <div class="args">
-            <div class="command-arg" *ngFor="let arg of args" [innerHTML]="arg"></div>
+        <div class="args" *ngIf="command">
+            <div class="command-arg" *ngFor="let arg of args"><ng-container *ngFor="let block of arg.contents">{{block}}</ng-container></div>
         </div>
 
 
-        <div class="response" *ngIf="output">
+        <div class="response" *ngIf="output.length" [@slide]>
             <div class="spacer"></div>
 
             <div class="response-list">
-                <div class="response-content" *ngFor="let out of output" [innerHTML]="out.output"></div>
+                <div class="response-content" *ngFor="let out of output" [innerHTML]="out.output" [@fade]></div>
             </div>
 
         </div>
@@ -34,7 +34,7 @@
                         {{out.title}}
                     </div>
                     <div class="log-message-status"
-                         [class.log-message-status--error]="out.error"
+                         [class.log-message-status--error]="!out.loading && out.error"
                          [class.log-message-status--loading]="out.loading">
                         <div class="bar"></div>
                         <div class="bar"></div>

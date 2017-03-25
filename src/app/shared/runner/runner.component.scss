@@ -5,6 +5,7 @@
   display: block;
   color: white;
   box-shadow: 10px 10px 5px #888888;
+  overflow:hidden;
 }
 
 .runner {
@@ -51,14 +52,16 @@
   }
 
   .response {
-    width: 20%;
-    margin-top: -20px;
+    width: 30%;
     display: flex;
+    font-size: .7em;
+    position: relative;
 
     .response-content {
-      white-space: pre;
-      display:inline-block;
+      white-space: pre-wrap;
+      display: inline-block;
       line-height: 20px;
+      text-align: left;
     }
 
     .response-list {
@@ -74,15 +77,15 @@
 
 .log-message {
   text-align: left;
-  text-transform: uppercase;
-  font-size: .8em;
+  font-size: 1em;
   color: #b4b4b4;
-  width: auto;
+  width: 100px;
 }
 
 .log-message-label {
   display:flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .log-message-status {
@@ -90,6 +93,7 @@
   width: 100%;
   height: 2px;
   position: relative;
+  opacity: .3;
 
   &:not(.log-message-status--loading) .bar {
     display: none;
@@ -108,8 +112,9 @@
 
 }
 .log-message-type {
-  margin-right: 5px;
-  color: #0e67fb;
+  width: 20px;
+  color: #ffffff;
+  opacity: .3;
 }
 
 .log-message-status--loading {

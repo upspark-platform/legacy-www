@@ -1,9 +1,29 @@
-<div class="block app-block-intro">
+<div class="block app-block-intro" [class.hide-padding-bottom]="!running">
     <div class="container text-xs-center">
         <h1 class="block-title mb-0 text-uppercase app-myphone-brand">Upspark</h1>
         <p class="lead mb-5 pb-5">The programmable command runner for the desktop</p>
 
-        <up-runner></up-runner>
+        <div class="row">
+
+            <div class="col-md-4" *ngIf="demo.script">
+                <up-code [contents]="platform"></up-code>
+            </div>
+
+            <div [class.col-md-8]="demo.script"
+                 [class.col-12]="!demo.script">
+
+                <up-runner *ngIf="running"
+                           [@slide]
+                           (@slide.done)="initRunner()"
+                           [command]="demo.runner.command"
+                           [log]="demo.runner.log"
+                           [args]="demo.runner.args"
+                           [output]="demo.runner.output">
+                </up-runner>
+
+            </div>
+
+        </div>
 
     </div>
 </div>
@@ -11,9 +31,10 @@
 <div class="block block-bordered-lg">
     <div class="container text-center app-translate-15" data-transition="entrance">
         <blockquote class="pull-quote">
-            <img class="rounded-circle" src="../assets/img/avatar-mdo.png">
             <p>
-                “Task management. Calendars. Email. They all have one thing in common&hellip;literally no one enjoys managing them. Thanks to years of research, we can now predict every single thing you'll ever have to do or go to. Yeah, we're that good.”
+                “Task management. Calendars. Email. They all have one thing in common&hellip;literally no one enjoys
+                managing them. Thanks to years of research, we can now predict every single thing you'll ever have to do
+                or go to. Yeah, we're that good.”
             </p>
             <cite>Mark Otto, Creator of Mochi</cite>
         </blockquote>
