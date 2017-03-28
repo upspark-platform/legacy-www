@@ -1,3 +1,3 @@
-export function format(input) {
-    return JSON.parse(input);
+export function sort(...args) {
+    return args.sort();
 }

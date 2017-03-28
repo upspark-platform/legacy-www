@@ -1,8 +1,6 @@
 import {AfterViewInit, animate, Component, OnInit, style, transition, trigger} from "@angular/core";
-import {Command} from "../shared/runner/command";
 import {LandingDemo} from "./landing-demo";
 
-const commands:Command[] = require('./lib/commands');
 const platform:string = require('raw-loader!./lib/platform');
 
 @Component({
@@ -24,7 +22,10 @@ export class LandingComponent implements AfterViewInit {
     public platform:string = platform;
 
     initRunner() {
-        this.demo.init();
+        this.demo.init(
+            this.platform,
+            platform => this.platform = platform
+        );
     }
 
     ngAfterViewInit() {

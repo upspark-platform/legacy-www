@@ -53,4 +53,8 @@ export class DelayedText {
         this.consumer(this.text);
     }
 
+    set(text: string) {
+        this.text = text;
+    }
+
 }

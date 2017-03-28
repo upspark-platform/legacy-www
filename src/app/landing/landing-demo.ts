@@ -12,7 +12,11 @@ export class LandingDemo {
         value => this.runner.command = value
     );
 
-    init(): any {
+    public scriptFile: DelayedText;
+
+    init(platform:string, consumer: (value: string) => any): any {
+
+        this.scriptFile = new DelayedText(consumer, platform);
 
         this.run(':', 'path', null, 500, 'C:\\Users\\David\\.upspark')
             .then(this.wait(2000))
@@ -24,10 +28,42 @@ export class LandingDemo {
                 ']'
             ]))
             .then(this.wait(2000))
-            .then(() => this.run(':', 'platform', null, 500, 'Platform script opened in default editor').then(() => this.script = true));
+            .then(() => this.run(':', 'platform', null, 500, 'Platform script opened in default editor').then(() => this.script = true))
+            .then(this.wait(2000))
+            .then(() => this.platform(
+                "",
+                "export function format(json) {",
+                "    return JSON.parse(json);",
+                "}"
+            ))
+            .then(this.wait(2000))
+            .then(() => this.run(':', 'clear', null, 10, '').then(() =>  {
+                this.runner.log.splice(0, this.runner.log.length);
+                this.runner.output.splice(0, this.runner.log.length);
+            }))
+            .then(this.wait(2000))
+            .then(() => this.run(':', 'reload', ["commands"], 10, 'Reloaded 2 commands'))
+            .then(this.wait(2000))
+            .then(() => this.run('#', 'format', ['{list:[\"a\",\"b\",\"c\"],value:null,number:100}'], 500, [
+                "{",
+                "    \"list\": [",
+                "        \"a\",",
+                "        \"b\",",
+                "        \"c\",",
+                "     ],",
+                "     \"value\": null,",
+                "     \"number\": 100",
+                "}"
+            ]))
+            .then(this.wait(2000))
+            .then(() => this.input('#', 'hello', ["upspark", ":-)"]))
     }
 
-    run(type: string, command: string, args: any, time: number, out: any, error: boolean = false): Promise<any> {
+    platform(...lines:string[]): Promise<any> {
+        return this.scriptFile.append(lines.join('\n'), 100)
+    }
+
+    input(type: string, command: string, args: any): Promise<any> {
 
         let display: string = command;
         if (type !== '#') {
@@ -68,7 +104,6 @@ export class LandingDemo {
                         contents.push('');
 
                         return new DelayedText(value => contents[index] = value).append(argLineBlock, arg.interval);
-
                     }));
 
                     this.runner.args.push(resultingArgument);
@@ -79,6 +114,15 @@ export class LandingDemo {
                 return chain;
 
             })
+    }
+
+    run(type: string, command: string, args: any, time: number, out: any, error: boolean = false): Promise<any> {
+
+        return this.input(
+                type,
+                command,
+                args
+            )
             .then(this.wait(500))
             .then(() => {
                 this.runner.args.splice(0, this.runner.args.length);
