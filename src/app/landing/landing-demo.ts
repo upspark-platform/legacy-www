@@ -39,7 +39,7 @@ export class LandingDemo {
             .then(this.wait(2000))
             .then(() => this.run(':', 'clear', null, 10, '').then(() =>  {
                 this.runner.log.splice(0, this.runner.log.length);
-                this.runner.output.splice(0, this.runner.log.length);
+                this.runner.output.splice(0, this.runner.output.length);
             }))
             .then(this.wait(2000))
             .then(() => this.run(':', 'reload', ["commands"], 10, 'Reloaded 2 commands'))
@@ -56,7 +56,13 @@ export class LandingDemo {
                 "}"
             ]))
             .then(this.wait(2000))
+            .then(() => this.run(':', 'clear', null, 10, '').then(() =>  {
+                this.runner.log.splice(0, this.runner.log.length);
+                this.runner.output.splice(0, this.runner.output.length);
+            }))
+            .then(this.wait(2000))
             .then(() => this.input('#', 'hello', ["upspark", ":-)"]))
+
     }
 
     platform(...lines:string[]): Promise<any> {
