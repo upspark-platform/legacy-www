@@ -7,7 +7,12 @@ import {DownloadsComponent} from "./downloads.component";
         RouterModule.forChild([
             {
                 path: 'downloads',
-                component: DownloadsComponent
+                component: DownloadsComponent,
+                data: {
+                    meta: {
+                        title: 'Upspark - Downloads',
+                    }
+                }
             },
         ])
     ],
