@@ -11,25 +11,25 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand mr-auto" href="../">
+        <a class="navbar-brand mr-auto" role="button" >
             <span>{{title}}</span>
         </a>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="..//index.html">StartUp</a>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" role="button" routerLink="/downloads">Download</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="../minimal/index.html">Minimal</a>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" role="button" routerLink="/tutorial">Getting Started</a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="../bold/index.html">Bold</a>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" role="button" routerLink="/documentation">Documentation</a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="../docs/index.html">Docs</a>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" role="button" routerLink="/recipes">Recipes</a>
                 </li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </nav>
 </div>

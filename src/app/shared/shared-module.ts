@@ -3,19 +3,24 @@ import {NgModule} from "@angular/core";
 import {HeaderComponent} from "./header/header.component";
 import {RunnerComponent} from "./runner/runner.component";
 import {CodeComponent} from "./code/code.component";
+import {FooterComponent} from "./footer/footer.component";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     declarations: [
         HeaderComponent,
         RunnerComponent,
+        FooterComponent,
         CodeComponent
     ],
     exports: [
         HeaderComponent,
         RunnerComponent,
+        FooterComponent,
         CodeComponent
     ],
     providers: [

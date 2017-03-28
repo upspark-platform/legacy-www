@@ -5,11 +5,12 @@
 
         <div class="row">
 
-            <div class="col-md-4" *ngIf="demo.script">
+            <div class="col-md-4" *ngIf="demo.script" [@expand]>
                 <up-code [contents]="platform"></up-code>
             </div>
 
-            <div [class.col-md-8]="demo.script"
+            <div class="animated-width"
+                 [class.col-md-8]="demo.script"
                  [class.col-12]="!demo.script">
 
                 <up-runner *ngIf="running"

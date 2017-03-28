@@ -12,6 +12,12 @@ const platform:string = require('raw-loader!./lib/platform');
                 style({opacity: 0}),
                 animate(2000, style({opacity: '1'})),
             ])
+        ]),
+        trigger('expand', [
+            transition('void => *', [
+                style({width: 0}),
+                animate(500, style({width: '*'})),
+            ])
         ])
     ]
 })
