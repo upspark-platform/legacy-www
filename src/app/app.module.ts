@@ -7,12 +7,14 @@ import {DownloadsModule} from "./downloads/downloads.module";
 import {SharedModule} from "./shared/shared-module";
 import { MetaModule, MetaConfig } from 'ng2-meta';
 import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
+import {FeedbackModule} from "./feedback/feedback.module";
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
         LandingModule,
+        FeedbackModule,
         DownloadsModule,
         RouterModule.forRoot([]),
         MetaModule.forRoot(),

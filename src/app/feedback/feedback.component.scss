@@ -1,0 +1,25 @@
+.selection {
+  border-left: 5px solid #202020;
+  padding: 20px 20px 0 20px;
+  margin: 20px;
+}
+.selection-description-line {
+  padding: 10px 0;
+}
+.selection-description-list {
+  padding-bottom: 10px;
+}
+
+.selection-header {
+  display: flex;
+  align-items: center;
+}
+
+.selection-icon {
+  font-size: 1.5em;
+  color: #0b73c2;
+}
+.selection-text {
+  margin-left: 10px;
+  font-size: 1.5em;
+}

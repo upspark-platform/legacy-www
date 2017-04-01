@@ -8,7 +8,9 @@
   overflow: hidden;
 }
 
-
+html,body {
+  height: 100%;
+}
 /* navbar */
 .app-navbar {
   font-size: 13px;
