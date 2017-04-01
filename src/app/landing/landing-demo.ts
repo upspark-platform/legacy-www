@@ -44,15 +44,13 @@ export class LandingDemo {
             .then(this.wait(2000))
             .then(() => this.run(':', 'reload', ["commands"], 10, 'Reloaded 2 commands'))
             .then(this.wait(2000))
-            .then(() => this.run('#', 'format', ['{list:[\"a\",\"b\",\"c\"],value:null,number:100}'], 500, [
+            .then(() => this.run('#', 'format', ['{list:[\"a\",\"b\",\"c\"]}'], 500, [
                 "{",
                 "    \"list\": [",
                 "        \"a\",",
                 "        \"b\",",
                 "        \"c\",",
-                "     ],",
-                "     \"value\": null,",
-                "     \"number\": 100",
+                "     ]",
                 "}"
             ]))
             .then(this.wait(2000))

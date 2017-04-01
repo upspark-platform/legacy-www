@@ -1,7 +1,7 @@
 import {AfterViewInit, animate, Component, OnInit, style, transition, trigger} from "@angular/core";
 import {LandingDemo} from "./landing-demo";
 
-const platform:string = require('raw-loader!./lib/platform');
+const platform:string = require('raw-loader!./platform');
 
 @Component({
     selector: 'up-landing',
@@ -9,7 +9,7 @@ const platform:string = require('raw-loader!./lib/platform');
     animations: [
         trigger('slide', [
             transition('void => *', [
-                style({opacity: 0}),
+                style({opacity: .9}),
                 animate(2000, style({opacity: '1'})),
             ])
         ]),
