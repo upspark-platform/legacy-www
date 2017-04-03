@@ -3,3 +3,5 @@ interface Meta {
 }
 
 declare const META:Meta;
+
+declare const $:any;

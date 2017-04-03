@@ -1,11 +1,13 @@
 <div class="container">
     <h3>What type of feedback did you want so submit?</h3>
     <hr>
+
     <div class="row">
 
-        <div class="col-md-4" *ngFor="let type of types">
+        <div class="col-md-4" *ngFor="let type of types; let i = index;">
 
-            <br>
+            <br class="hidden-md-up" *ngIf="i !== 0">
+
             <div class="selection" [class.selected]="type.selected" (click)="onTypeClick(type)">
 
                 <div class="selection-header">
@@ -18,7 +20,8 @@
                 <div class="selection-description">
 
                     <div class="selection-description-line"
-                         *ngFor="let item of type.descriptionItems">{{item}}</div>
+                         *ngFor="let item of type.descriptionItems">{{item}}
+                    </div>
                     <ul class="selection-description-list"
                         *ngIf="type.descriptionListItems?.length">
 
@@ -54,15 +57,17 @@
 
         </div>
 
-        <div class="col-md-6">
-<br>
+        <div class="col-md-6" *ngIf="!preview">
+            <br>
             <h3>Did you have an image to attach?</h3>
             <hr>
 
             <div class="image-box">
 
+                <input class="image-selector" type="file" accept="image/*" #image (change)="onImageChange()">
+
                 <div class="image-button">
-                    <button class="btn btn-warning" role="button">
+                    <button class="btn btn-warning" role="button" (click)="selectImage()">
                         <span class="icon icon-plus"></span>
                     </button>
                 </div>
@@ -70,17 +75,39 @@
             </div>
 
         </div>
+
+        <div class="col-md-6" *ngIf="preview">
+            <br>
+            <h3>Attachment</h3>
+            <hr>
+
+            <div class="image-box" [style.background-image]="preview">
+
+                <div class="image-button">
+                    <button class="btn btn-danger" role="button" (click)="clearImage()" [disabled]="loadingPreview">
+                        <span class="icon icon-trash"></span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 
     <div class="row">
         <div class="col-12">
 
-            <button class="btn btn-block submit-button" role="button">Submit</button>
+            <button (click)="submit()"
+                    class="btn btn-block submit-button"
+                    [class.btn-danger]="type.id === 'bug'"
+                    [class.btn-warning]="type.id === 'kuddos'"
+                    [class.btn-success]="type.id === 'suggestion'"
+                    role="button">Submit
+            </button>
 
         </div>
     </div>
-
-
 
 </div>

@@ -15,7 +15,7 @@
   padding: 10px 0;
 }
 .selection-description-list {
-  padding-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .selection-header {
@@ -39,8 +39,9 @@
 
 .submit-button {
   text-transform: uppercase;
-  margin: 20px 0;
-  height: 40px;
+  margin: 30px 0;
+  height: 50px;
+  font-size: 110%;
   border-radius: 0;
 }
 .image-box {
@@ -49,9 +50,15 @@
   justify-content:center;
   flex-direction: column;
   height: 200px;
+  background: none no-repeat center;
+  background-size: cover;
+
 }
 .image-button .btn {
   border-radius: 0;
   height: 50px;
   width: 50px;
+}
+.image-selector {
+  display: none;
 }

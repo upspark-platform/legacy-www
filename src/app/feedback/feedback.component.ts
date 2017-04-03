@@ -1,5 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, ElementRef, OnInit, Sanitizer, ViewChild} from "@angular/core";
 import {FeedbackType} from "./feedback-type";
+import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 
 const types:FeedbackType[] = require("./feedback-types");
 
@@ -14,9 +15,17 @@ export class FeedbackComponent implements OnInit {
         this.type = types.find(type => type.selected);
     }
 
+    constructor(private sanitizer:DomSanitizer) {
+    }
+
     public type:FeedbackType;
     public types:FeedbackType[] = types;
     public feedback:string = '';
+    public preview:SafeStyle;
+    public loadingPreview:boolean;
+
+    @ViewChild("image")
+    public image:ElementRef;
 
     public onTypeClick(selectedType:FeedbackType) {
         this.type = selectedType;
@@ -27,8 +36,40 @@ export class FeedbackComponent implements OnInit {
             .forEach(type => type.selected = false);
     }
 
+    public clearImage() {
+        this.preview = null;
+    }
+
+    public onImageChange() {
+
+        if (!this.image.nativeElement.files
+            || !this.image.nativeElement.files[0]) {
+            this.preview = null;
+            return;
+        }
+
+        this.loadingPreview = true;
+
+        let reader = new FileReader();
+
+        reader.onload = (event:any) => {
+            this.preview = this.sanitizer.bypassSecurityTrustStyle('url(' + event.target.result + ')');
+            this.loadingPreview = false;
+        };
+
+        reader.readAsDataURL(this.image.nativeElement.files[0]);
+    }
+
     public onFeedbackUpdate(event:Event) {
         this.feedback = event.target["value"];
+    }
+
+    public selectImage() {
+        $(this.image.nativeElement).click();
+    }
+
+    public submit() {
+        console.log(this.image);
     }
 
 }
