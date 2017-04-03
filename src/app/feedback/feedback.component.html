@@ -37,8 +37,24 @@
     </div>
 
     <div class="row">
+
+        <div class="col-12">
+
+            <br>
+
+            <h3>Provide an Email</h3>
+            <hr>
+            <input type="text" class="form-control email" ([ngModel])="email">
+
+        </div>
+
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <br>
+
+
             <div class="row">
                 <div class="col-8">
                     <h3>The {{type.title}}'s Description</h3>
@@ -112,7 +128,7 @@
                     [class.btn-warning]="type.id === 'kuddos'"
                     [class.btn-success]="type.id === 'suggestion'"
                     role="button"
-                    [disabled]="!feedback || feedback.length > 500">
+                    [disabled]="!feedback || feedback.length > 500 || email.length <= 2">
                 Submit
             </button>
 

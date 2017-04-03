@@ -24,6 +24,7 @@ export class FeedbackComponent implements OnInit {
     public preview:SafeStyle;
     public submitting:boolean;
     public loadingPreview:boolean;
+    public email:string = '';
 
     @ViewChild("image")
     public image:ElementRef;
