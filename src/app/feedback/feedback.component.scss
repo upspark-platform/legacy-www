@@ -1,7 +1,15 @@
 .selection {
-  border-left: 5px solid #202020;
+  border-left: 5px solid #dadada;
   padding: 20px 20px 0 20px;
-  margin: 20px;
+  color: #969696;
+
+  &:hover,
+  &.selected {
+    border-color: #0b73c2;
+    cursor: pointer;
+    color: black;
+  }
+
 }
 .selection-description-line {
   padding: 10px 0;
@@ -22,4 +30,28 @@
 .selection-text {
   margin-left: 10px;
   font-size: 1.5em;
+}
+
+.feedback {
+  resize: none;
+  height: 200px;
+}
+
+.submit-button {
+  text-transform: uppercase;
+  margin: 20px 0;
+  height: 40px;
+  border-radius: 0;
+}
+.image-box {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction: column;
+  height: 200px;
+}
+.image-button .btn {
+  border-radius: 0;
+  height: 50px;
+  width: 50px;
 }

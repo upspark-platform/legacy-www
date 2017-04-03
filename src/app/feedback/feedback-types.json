@@ -1,0 +1,35 @@
+[
+  {
+    "id": "bug",
+    "icon": "bug",
+    "title": "Bug",
+    "descriptionItems": [
+      "Select this option if you found an issue when using the website or desktop application.",
+      "Please be sure to provide all details that will help me address this issue, for example:"
+    ],
+    "descriptionListItems": [
+      "Operating System",
+      "Screen Resolution",
+      "Steps to Reproduce"
+    ],
+    "selected": true
+  },
+  {
+    "id": "suggestion",
+    "icon": "magnifying-glass",
+    "title": "Suggestion",
+    "descriptionItems": [
+      "I'm always looking for ways to make Upspark better or even better approaches to displaying documentation.",
+      "Be detailed as possible and don't hold back!"
+    ]
+  },
+  {
+    "id": "kuddos",
+    "icon": "trophy",
+    "title": "Kuddos",
+    "descriptionItems": [
+      "Drop some love with this selection. Let me know your favorite feature so I know what's making you come back for more.",
+      "Expect a hearty thank you in return."
+    ]
+  }
+]
