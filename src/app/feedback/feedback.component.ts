@@ -22,12 +22,17 @@ export class FeedbackComponent implements OnInit {
     public types:FeedbackType[] = types;
     public feedback:string = '';
     public preview:SafeStyle;
+    public submitting:boolean;
     public loadingPreview:boolean;
 
     @ViewChild("image")
     public image:ElementRef;
 
     public onTypeClick(selectedType:FeedbackType) {
+        if(this.submitting) {
+            return;
+        }
+
         this.type = selectedType;
 
         selectedType.selected = true;
@@ -69,7 +74,13 @@ export class FeedbackComponent implements OnInit {
     }
 
     public submit() {
-        console.log(this.image);
+        if(this.submitting
+            || !this.feedback
+            || this.feedback.length > 500) {
+            return;
+        }
+
+        this.submitting = true;
     }
 
 }

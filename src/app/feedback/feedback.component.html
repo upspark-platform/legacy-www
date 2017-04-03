@@ -52,6 +52,7 @@
 
 
             <textarea class="form-control feedback"
+                      [disabled]="submitting"
                       (keyup)="onFeedbackUpdate($event)"
                       (change)="onFeedbackUpdate($event)"></textarea>
 
@@ -67,7 +68,7 @@
                 <input class="image-selector" type="file" accept="image/*" #image (change)="onImageChange()">
 
                 <div class="image-button">
-                    <button class="btn btn-warning" role="button" (click)="selectImage()">
+                    <button [disabled]="submitting || loadingPreview" class="btn btn-warning" role="button" (click)="selectImage()">
                         <span class="icon icon-plus"></span>
                     </button>
                 </div>
@@ -84,7 +85,7 @@
             <div class="image-box" [style.background-image]="preview">
 
                 <div class="image-button">
-                    <button class="btn btn-danger" role="button" (click)="clearImage()" [disabled]="loadingPreview">
+                    <button [disabled]="submitting || loadingPreview" class="btn btn-danger" role="button" (click)="clearImage()">
                         <span class="icon icon-trash"></span>
                     </button>
                 </div>
@@ -99,12 +100,20 @@
     <div class="row">
         <div class="col-12">
 
+            <div class="progress" *ngIf="submitting">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                     role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
             <button (click)="submit()"
+                    *ngIf="!submitting"
                     class="btn btn-block submit-button"
                     [class.btn-danger]="type.id === 'bug'"
                     [class.btn-warning]="type.id === 'kuddos'"
                     [class.btn-success]="type.id === 'suggestion'"
-                    role="button">Submit
+                    role="button"
+                    [disabled]="!feedback || feedback.length > 500">
+                Submit
             </button>
 
         </div>
