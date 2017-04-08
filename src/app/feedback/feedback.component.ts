@@ -26,6 +26,8 @@ export class FeedbackComponent implements OnInit {
     public submitting:boolean;
     public loading:boolean;
     public email:string = '';
+    public attachment:string;
+    public attachmentError:string;
 
     @ViewChild("image")
     public image:ElementRef;
@@ -44,7 +46,12 @@ export class FeedbackComponent implements OnInit {
     }
 
     public get feedbackLength():number {
-        return this.feedback.split(/\n|\r|\n\r|\r\n/g).map(line => line.trim()).join("").length;
+        return this.feedback
+            .split(/\n|\r|\n\r|\r\n/g)
+            .map(line => line.trim())
+            .filter(line => line)
+            .join("")
+            .trim().length;
     }
 
     public get valid() {
@@ -56,15 +63,36 @@ export class FeedbackComponent implements OnInit {
             && emailValidatorExpression.test(this.email);
     }
 
+    public resetAttachment() {
+        this.preview = null;
+        this.attachment = null;
+    }
+
     public clearImage() {
         this.preview = null;
     }
 
     public onImageChange() {
+        this.attachmentError = null;
 
         if (!this.image.nativeElement.files
             || !this.image.nativeElement.files[0]) {
-            this.preview = null;
+
+            this.resetAttachment();
+            return;
+        }
+
+        const upload:File = this.image.nativeElement.files[0];
+
+        if (!upload.type.startsWith("image/")) {
+            this.attachmentError = 'Selected file was not an image!';
+            this.resetAttachment();
+            return;
+        }
+
+        if (upload.size > 10000000) {
+            this.attachmentError = 'Selected file exceeded 10MB';
+            this.resetAttachment();
             return;
         }
 
@@ -72,12 +100,17 @@ export class FeedbackComponent implements OnInit {
 
         let reader = new FileReader();
 
-        reader.onload = (event:any) => {
-            this.preview = this.sanitizer.bypassSecurityTrustStyle('url(' + event.target.result + ')');
+        reader["onload"] = (event:any) => {
+            this.attachment = event.target.result;
+            console.log(this.attachment);
+
+            this.preview = this.sanitizer.bypassSecurityTrustStyle(
+                'url(' + this.attachment + ')'
+            );
             this.loading = false;
         };
 
-        reader.readAsDataURL(this.image.nativeElement.files[0]);
+        reader.readAsDataURL(upload);
     }
 
     public onFeedbackUpdate(event:Event) {
