@@ -102,11 +102,10 @@ export class FeedbackComponent implements OnInit {
 
         reader["onload"] = (event:any) => {
             this.attachment = event.target.result;
-            console.log(this.attachment);
-
             this.preview = this.sanitizer.bypassSecurityTrustStyle(
                 'url(' + this.attachment + ')'
             );
+
             this.loading = false;
         };
 
