@@ -3,6 +3,7 @@ import {FeedbackType} from "./feedback-type";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 
 const types:FeedbackType[] = require("./feedback-types");
+const emailValidatorExpression:RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
     selector: 'up-downloads',
@@ -23,7 +24,7 @@ export class FeedbackComponent implements OnInit {
     public feedback:string = '';
     public preview:SafeStyle;
     public submitting:boolean;
-    public loadingPreview:boolean;
+    public loading:boolean;
     public email:string = '';
 
     @ViewChild("image")
@@ -42,6 +43,19 @@ export class FeedbackComponent implements OnInit {
             .forEach(type => type.selected = false);
     }
 
+    public get feedbackLength():number {
+        return this.feedback.split(/\n|\r|\n\r|\r\n/g).map(line => line.trim()).join("").length;
+    }
+
+    public get valid() {
+        let length:number = this.feedbackLength;
+
+        return length >= 10
+            && length <= 500
+            && this.email
+            && emailValidatorExpression.test(this.email);
+    }
+
     public clearImage() {
         this.preview = null;
     }
@@ -54,13 +68,13 @@ export class FeedbackComponent implements OnInit {
             return;
         }
 
-        this.loadingPreview = true;
+        this.loading = true;
 
         let reader = new FileReader();
 
         reader.onload = (event:any) => {
             this.preview = this.sanitizer.bypassSecurityTrustStyle('url(' + event.target.result + ')');
-            this.loadingPreview = false;
+            this.loading = false;
         };
 
         reader.readAsDataURL(this.image.nativeElement.files[0]);

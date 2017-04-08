@@ -42,9 +42,9 @@
 
             <br>
 
-            <h3>Provide an Email</h3>
+            <h3>What email can we contact?</h3>
             <hr>
-            <input type="text" class="form-control email" ([ngModel])="email">
+            <input [(ngModel)]="email" type="text" class="form-control email" >
 
         </div>
 
@@ -59,10 +59,10 @@
                 <div class="col-8">
                     <h3>The {{type.title}}'s Description</h3>
                     <hr>
-
                 </div>
                 <div class="col-4 text-right">
-                    <small [class.text-danger]="feedback.length > 500">{{feedback.length}}/500</small>
+                    <small [class.text-danger]="feedbackLength > 500">{{feedbackLength}}/500</small><br>
+                    <small *ngIf="feedback && feedbackLength < 10">At least {{10 - feedbackLength}} more characters.</small>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                 <input class="image-selector" type="file" accept="image/*" #image (change)="onImageChange()">
 
                 <div class="image-button">
-                    <button [disabled]="submitting || loadingPreview" class="btn btn-warning" role="button" (click)="selectImage()">
+                    <button [disabled]="submitting || loading" class="btn btn-warning" role="button" (click)="selectImage()">
                         <span class="icon icon-plus"></span>
                     </button>
                 </div>
@@ -101,7 +101,7 @@
             <div class="image-box" [style.background-image]="preview">
 
                 <div class="image-button">
-                    <button [disabled]="submitting || loadingPreview" class="btn btn-danger" role="button" (click)="clearImage()">
+                    <button [disabled]="submitting || loading" class="btn btn-danger" role="button" (click)="clearImage()">
                         <span class="icon icon-trash"></span>
                     </button>
                 </div>
@@ -128,7 +128,7 @@
                     [class.btn-warning]="type.id === 'kuddos'"
                     [class.btn-success]="type.id === 'suggestion'"
                     role="button"
-                    [disabled]="!feedback || feedback.length > 500 || email.length <= 2">
+                    [disabled]="!valid">
                 Submit
             </button>
 
