@@ -3,15 +3,19 @@
   padding: 20px 20px 0 20px;
   color: #969696;
 
-  &:hover,
+  &:hover:not(.selected) {
+    color: #6c6c6c;
+  }
   &.selected {
-    border-color: #0b73c2;
-    cursor: pointer;
     color: black;
-
+    border-color: #0b73c2;
     .selection-icon {
       color: #0b73c2;
     }
+  }
+  &:hover,
+  &.selected {
+    cursor: pointer;
   }
 
 }
