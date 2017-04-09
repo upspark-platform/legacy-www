@@ -1,5 +1,5 @@
 .selection {
-  border-left: 5px solid #dadada;
+  border-left: 1px dotted #dadada;
   padding: 20px 20px 0 20px;
   color: #969696;
 
@@ -8,8 +8,20 @@
     border-color: #0b73c2;
     cursor: pointer;
     color: black;
+
+    .selection-icon {
+      color: #0b73c2;
+    }
   }
 
+}
+
+.thinner {
+  margin-top: 10px;
+}
+
+.section {
+  margin-top: 40px;
 }
 .selection-description-line {
   padding: 10px 0;
@@ -25,7 +37,6 @@
 
 .selection-icon {
   font-size: 1.5em;
-  color: #0b73c2;
 }
 .selection-text {
   margin-left: 10px;

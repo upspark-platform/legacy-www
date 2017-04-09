@@ -1,43 +1,42 @@
 import {Component, ElementRef, OnInit, Sanitizer, ViewChild} from "@angular/core";
 import {FeedbackType} from "./feedback-type";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {FeedbackService} from "./feedback.service";
+import {Feedback} from "./feedback";
+import {Util} from "../shared/util";
+import {Router} from "@angular/router";
 
-const types:FeedbackType[] = require("./feedback-types");
-const emailValidatorExpression:RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const types: FeedbackType[] = require("./feedback-types");
 
 @Component({
-    selector: 'up-downloads',
+    selector: 'up-feedback',
     templateUrl: './feedback.component.html',
     styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
 
     ngOnInit() {
-        this.type = types.find(type => type.selected);
+        this.feedback = new Feedback(types.find(type => type.selected));
     }
 
-    constructor(private sanitizer:DomSanitizer) {
+    constructor(private sanitizer: DomSanitizer,
+                private feedbackService: FeedbackService,
+                private router: Router) {
     }
 
-    public type:FeedbackType;
-    public types:FeedbackType[] = types;
-    public feedback:string = '';
-    public preview:SafeStyle;
-    public submitting:boolean;
-    public loading:boolean;
-    public email:string = '';
-    public attachment:string;
-    public attachmentError:string;
+    public feedback: Feedback;
+    public preview: SafeStyle;
+    public submitting: boolean;
+    public attachmentError: string;
 
     @ViewChild("image")
-    public image:ElementRef;
+    public image: ElementRef;
 
-    public onTypeClick(selectedType:FeedbackType) {
-        if(this.submitting) {
+    public onTypeClick(selectedType: FeedbackType) {
+        if (this.submitting) {
             return;
         }
-
-        this.type = selectedType;
+        this.feedback.selected = selectedType;
 
         selectedType.selected = true;
 
@@ -45,27 +44,9 @@ export class FeedbackComponent implements OnInit {
             .forEach(type => type.selected = false);
     }
 
-    public get feedbackLength():number {
-        return this.feedback
-            .split(/\n|\r|\n\r|\r\n/g)
-            .map(line => line.trim())
-            .filter(line => line)
-            .join("")
-            .trim().length;
-    }
-
-    public get valid() {
-        let length:number = this.feedbackLength;
-
-        return length >= 10
-            && length <= 500
-            && this.email
-            && emailValidatorExpression.test(this.email);
-    }
-
     public resetAttachment() {
         this.preview = null;
-        this.attachment = null;
+        this.feedback.image = null;
     }
 
     public clearImage() {
@@ -82,7 +63,7 @@ export class FeedbackComponent implements OnInit {
             return;
         }
 
-        const upload:File = this.image.nativeElement.files[0];
+        const upload: File = this.image.nativeElement.files[0];
 
         if (!upload.type.startsWith("image/")) {
             this.attachmentError = 'Selected file was not an image!';
@@ -96,38 +77,71 @@ export class FeedbackComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
-
         let reader = new FileReader();
 
-        reader["onload"] = (event:any) => {
-            this.attachment = event.target.result;
+        reader["onload"] = (event: any) => {
+            this.feedback.image = event.target.result;
             this.preview = this.sanitizer.bypassSecurityTrustStyle(
-                'url(' + this.attachment + ')'
+                'url(' + this.feedback.image + ')'
             );
-
-            this.loading = false;
         };
 
         reader.readAsDataURL(upload);
     }
 
-    public onFeedbackUpdate(event:Event) {
-        this.feedback = event.target["value"];
-    }
 
     public selectImage() {
         $(this.image.nativeElement).click();
     }
 
     public submit() {
-        if(this.submitting
-            || !this.feedback
-            || this.feedback.length > 500) {
+        if (this.submitting || !this.valid) {
             return;
         }
 
         this.submitting = true;
+
+        const navigate = (valid: boolean = false) => {
+            return this.router.navigateByUrl(
+                `/feedback/${!valid ? 'error' : 'success'}`,
+                {skipLocationChange: true}
+            )
+        };
+
+        this.feedbackService
+            .submit(this.feedback)
+            .then(navigate)
+            .catch((error: any) => {
+                console.error(error);
+
+                return navigate(true);
+            });
+    }
+
+    public get length(): number {
+        return this.feedback.content
+            .split(/\n|\r|\n\r|\r\n/g)
+            .map(line => line.trim())
+            .filter(line => line)
+            .join("")
+            .trim().length;
+    }
+
+    public get types(): FeedbackType[] {
+        return types;
+    }
+
+    public onFeedbackChangeEvent(event: Event) {
+        this.feedback.content = event.target["value"];
+    }
+
+    public get valid(): boolean {
+        let length: number = this.length;
+
+        return length >= 10
+            && length <= 500
+            && this.feedback.email
+            && Util.isValidEmail(this.feedback.email);
     }
 
 }

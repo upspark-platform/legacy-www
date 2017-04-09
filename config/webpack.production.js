@@ -2,6 +2,7 @@ const webpackMerge = require('webpack-merge');
 const webpack = require('webpack');
 const commonConfig = require('./webpack.common.js');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const app = require('../package.json');
 
 const path = require('path');
 
@@ -25,7 +26,8 @@ module.exports = function() {
             new webpack.DefinePlugin({
                 'process.env': {
                     'ENV': JSON.stringify('production')
-                }
+                },
+                'API_URL': JSON.stringify(app.api.production)
             }),
             new webpack.optimize.UglifyJsPlugin({
                 beautify: false,

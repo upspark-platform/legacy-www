@@ -1,105 +1,93 @@
 <div class="container">
-    <h3>What type of feedback did you want so submit?</h3>
-    <hr>
 
     <div class="row">
+        <br>
 
-        <div class="col-md-4" *ngFor="let type of types; let i = index;">
+        <div class="col-12"><h3>What type of feedback did you want so submit?</h3>
+            <hr>
 
-            <br class="hidden-md-up" *ngIf="i !== 0">
+            <div class="row">
 
-            <div class="selection" [class.selected]="type.selected" (click)="onTypeClick(type)">
+                <div class="col-md-4" *ngFor="let type of types; let i = index;">
 
-                <div class="selection-header">
-                    <div class="selection-icon">
-                        <span class="icon icon-{{type.icon}}"></span>
+                    <br class="hidden-md-up" *ngIf="i !== 0">
+
+                    <div class="selection" [class.selected]="type.selected" (click)="onTypeClick(type)">
+
+                        <div class="selection-header">
+                            <div class="selection-icon">
+                                <span class="icon icon-{{type.icon}}"></span>
+                            </div>
+                            <div class="selection-text">{{type.title}}</div>
+                        </div>
+
+                        <div class="selection-description">
+
+                            <div class="selection-description-line"
+                                 *ngFor="let item of type.descriptionItems">{{item}}
+                            </div>
+                            <ul class="selection-description-list"
+                                *ngIf="type.descriptionListItems?.length">
+
+                                <li *ngFor="let item of type.descriptionListItems">{{item}}</li>
+                            </ul>
+
+                        </div>
+
                     </div>
-                    <div class="selection-text">{{type.title}}</div>
-                </div>
-
-                <div class="selection-description">
-
-                    <div class="selection-description-line"
-                         *ngFor="let item of type.descriptionItems">{{item}}
-                    </div>
-                    <ul class="selection-description-list"
-                        *ngIf="type.descriptionListItems?.length">
-
-                        <li *ngFor="let item of type.descriptionListItems">{{item}}</li>
-                    </ul>
 
                 </div>
 
             </div>
-
         </div>
-
     </div>
 
-    <div class="row">
 
-        <div class="col-12">
-
-            <br>
-
-            <h3>What email can upspark contact?</h3>
-            <hr>
-            <input [(ngModel)]="email" type="text" class="form-control email" >
-
-        </div>
-
-    </div>
-
-    <div class="row">
+    <div class="row section">
         <div class="col-md-6">
-            <br>
-
 
             <div class="row">
                 <div class="col-8">
 
-                    <h3>The {{type.title}}'s Description</h3>
+                    <h3>The {{feedback.selected.title}}'s Description</h3>
 
-                    <hr>
                 </div>
                 <div class="col-4 text-right">
-                    <small [class.text-danger]="feedbackLength > 500">{{feedbackLength}}/500</small><br>
-                    <small *ngIf="feedback && feedbackLength < 10">{{10 - feedbackLength}} more characters</small>
-                    <small *ngIf="!feedback">> 10</small>
+                    <small *ngIf="length >= 10" [class.text-danger]="length > 500">{{length}}/500</small>
+                    <small *ngIf="feedback.content && length < 10">{{10 - length}} more characters</small>
                 </div>
             </div>
 
+            <hr class="thinner">
 
             <textarea class="form-control feedback"
                       [disabled]="submitting"
-                      (keyup)="onFeedbackUpdate($event)"
-                      (change)="onFeedbackUpdate($event)"></textarea>
+                      (keyup)="onFeedbackChangeEvent($event)"
+                      (change)="onFeedbackChangeEvent($event)"></textarea>
 
         </div>
 
         <div class="col-md-6" *ngIf="!preview">
-            <br>
 
             <div class="row">
                 <div class="col-8">
 
                     <h3>Did you have an image to attach?</h3>
 
-                    <hr>
                 </div>
                 <div class="col-4 text-right">
                     <small *ngIf="attachmentError" class="text-error">{{attachmentError}}</small>
-                    <small *ngIf="!attachmentError">< 10 MB</small>
                 </div>
             </div>
 
+            <hr class="thinner">
 
             <div class="image-box">
 
                 <input class="image-selector" type="file" accept="image/*" #image (change)="onImageChange()">
 
                 <div class="image-button">
-                    <button [disabled]="submitting || loading" class="btn btn-warning" role="button" (click)="selectImage()">
+                    <button [disabled]="submitting" class="btn btn-warning" role="button" (click)="selectImage()">
                         <span class="icon icon-plus"></span>
                     </button>
                 </div>
@@ -109,14 +97,19 @@
         </div>
 
         <div class="col-md-6" *ngIf="preview">
-            <br>
-            <h3>Attachment</h3>
-            <hr>
+            <div class="row">
+                <div class="col-12">
 
+                    <h3>Attachment</h3>
+
+                </div>
+            </div>
+
+            <hr class="thinner">
             <div class="image-box" [style.background-image]="preview">
 
                 <div class="image-button">
-                    <button [disabled]="submitting || loading" class="btn btn-danger" role="button" (click)="clearImage()">
+                    <button [disabled]="submitting" class="btn btn-danger" role="button" (click)="clearImage()">
                         <span class="icon icon-trash"></span>
                     </button>
                 </div>
@@ -128,20 +121,34 @@
     </div>
 
 
+    <div class="row section">
+
+        <div class="col-12">
+
+            <h3>What email can upspark contact?</h3>
+            <hr>
+            <input [(ngModel)]="feedback.email" type="text" class="form-control email">
+
+        </div>
+
+    </div>
+
+
     <div class="row">
         <div class="col-12">
 
             <div class="progress" *ngIf="submitting">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                     role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                     role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                     style="width: 100%"></div>
             </div>
 
             <button (click)="submit()"
                     *ngIf="!submitting"
                     class="btn btn-block submit-button"
-                    [class.btn-danger]="type.id === 'bug'"
-                    [class.btn-warning]="type.id === 'kuddos'"
-                    [class.btn-success]="type.id === 'suggestion'"
+                    [class.btn-danger]="feedback.selected.id === 'bug'"
+                    [class.btn-warning]="feedback.selected.id === 'kuddos'"
+                    [class.btn-success]="feedback.selected.id === 'suggestion'"
                     role="button"
                     [disabled]="!valid">
                 Submit

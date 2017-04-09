@@ -16,7 +16,10 @@ import {FeedbackModule} from "./feedback/feedback.module";
         LandingModule,
         FeedbackModule,
         DownloadsModule,
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([{
+            path: '**',
+            redirectTo: "/"
+        }]),
         MetaModule.forRoot(),
         Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ])
     ],

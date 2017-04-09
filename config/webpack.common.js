@@ -4,32 +4,6 @@ const {CheckerPlugin} = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const app = require('../package.json');
 
-const meta = (property, ifNotFound, transformer) => {
-    let value = ifNotFound;
-
-    if (!app.meta || !app.meta.hasOwnProperty(property)) {
-        if(typeof ifNotFound === 'string' && ifNotFound.startsWith("~")) {
-            value = value.slice(1);
-
-            if(app.hasOwnProperty(value)) {
-                value = app[value];
-            }
-        }
-    } else {
-        value = app.meta[property];
-    }
-
-    if (transformer) {
-        if (typeof transformer === 'string') {
-            value = transformer.replace(/@/g, value);
-        } else {
-            value = transformer.call(value, value);
-        }
-    }
-
-    return typeof value === 'string' ? JSON.stringify(value) : value;
-};
-
 module.exports = function () {
     return {
         entry: {
@@ -78,7 +52,7 @@ module.exports = function () {
 
             new webpack.DefinePlugin({
                 'META': {
-                    'TITLE': meta('title', 'description')
+                    'TITLE': JSON.stringify("Upspark")
                 }
             }),
 

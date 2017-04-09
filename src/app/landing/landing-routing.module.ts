@@ -8,6 +8,7 @@ import {LandingComponent} from "./landing.component";
             {
                 path: '',
                 component: LandingComponent,
+
                 data: {
                     meta: {
                         title: 'Upspark - The programmable desktop command runner.',

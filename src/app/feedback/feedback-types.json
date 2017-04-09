@@ -1,5 +1,15 @@
 [
   {
+    "id": "suggestion",
+    "icon": "magnifying-glass",
+    "title": "Suggestion",
+    "descriptionItems": [
+      "I'm always looking for ways to make Upspark better or even better approaches to displaying documentation.",
+      "Be detailed as possible and don't hold back!"
+    ]
+  },
+
+  {
     "id": "bug",
     "icon": "bug",
     "title": "Bug",
@@ -14,15 +24,7 @@
     ],
     "selected": true
   },
-  {
-    "id": "suggestion",
-    "icon": "magnifying-glass",
-    "title": "Suggestion",
-    "descriptionItems": [
-      "I'm always looking for ways to make Upspark better or even better approaches to displaying documentation.",
-      "Be detailed as possible and don't hold back!"
-    ]
-  },
+
   {
     "id": "kuddos",
     "icon": "trophy",
