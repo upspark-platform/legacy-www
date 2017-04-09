@@ -21,3 +21,16 @@ up-app {
 .content {
   flex-grow: 1;
 }
+
+.stub {
+  min-height: 300px;
+}
+.stub-content {
+  margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  .sm-margin-top {
+    margin-top: 20px;
+  }
+}

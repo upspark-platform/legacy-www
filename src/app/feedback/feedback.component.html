@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container" (keyup.enter)="submit()">
 
     <div class="row">
         <br>
 
-        <div class="col-12"><h3>What type of feedback did you want so submit?</h3>
+        <div class="col-12"><h3>Select the type of feedback<span class="hidden-md-down">&nbsp;-</span></h3>
             <hr>
 
             <div class="row">
@@ -44,12 +44,13 @@
 
 
     <div class="row section">
-        <div class="col-md-6">
+
+        <div class="col-md-7">
 
             <div class="row">
                 <div class="col-8">
 
-                    <h3>The {{feedback.selected.title}}'s Description</h3>
+                    <h3>Enter the feedback<span class="hidden-md-down">&nbsp;-</span></h3>
 
                 </div>
                 <div class="col-4 text-right">
@@ -67,12 +68,12 @@
 
         </div>
 
-        <div class="col-md-6" *ngIf="!preview">
+        <div class="col-md-5 sm-margin-top" *ngIf="!preview">
 
             <div class="row">
                 <div class="col-8">
 
-                    <h3>Did you have an image to attach?</h3>
+                    <h3>Optional Image<span class="hidden-md-down">&nbsp;-</span></h3>
 
                 </div>
                 <div class="col-4 text-right">
@@ -100,7 +101,7 @@
             <div class="row">
                 <div class="col-12">
 
-                    <h3>Attachment</h3>
+                    <h3>Image Attached</h3>
 
                 </div>
             </div>
@@ -125,7 +126,9 @@
 
         <div class="col-12">
 
-            <h3>What email can upspark contact?</h3>
+            <h3 class="hidden-xs-down">Enter an email we can use to communicate with<span class="hidden-md-down">&nbsp;-</span></h3>
+            <h3 class="hidden-md-up">Email</h3>
+
             <hr>
             <input [(ngModel)]="feedback.email" type="text" class="form-control email">
 

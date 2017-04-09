@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Sanitizer, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, OnInit, Sanitizer, ViewChild} from "@angular/core";
 import {FeedbackType} from "./feedback-type";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {FeedbackService} from "./feedback.service";
@@ -13,7 +13,11 @@ const types: FeedbackType[] = require("./feedback-types");
     templateUrl: './feedback.component.html',
     styleUrls: ['./feedback.component.scss']
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent implements OnInit,AfterViewInit {
+
+    ngAfterViewInit() {
+        Util.scrollTopTop();
+    }
 
     ngOnInit() {
         this.feedback = new Feedback(types.find(type => type.selected));

@@ -4,8 +4,7 @@
     "icon": "magnifying-glass",
     "title": "Suggestion",
     "descriptionItems": [
-      "I'm always open to ideas on how to make Upspark better.",
-      "Please be as detailed as possible!"
+      "We're always open to ideas on how to make Upspark better and easier to use."
     ]
   },
 
@@ -14,13 +13,7 @@
     "icon": "bug",
     "title": "Bug",
     "descriptionItems": [
-      "Select this option if you found an issue when using the website or desktop application.",
-      "Please be sure to provide all details that will help me address this issue, for example:"
-    ],
-    "descriptionListItems": [
-      "Operating System",
-      "Screen Resolution",
-      "Steps to Reproduce"
+      "Found an issue when using the website or desktop application?"
     ],
     "selected": true
   },
@@ -30,8 +23,7 @@
     "icon": "trophy",
     "title": "Kudos",
     "descriptionItems": [
-      "Drop some love with this selection. Let me know your favorite feature so I know what's making you come back for more.",
-      "Expect a hearty thank you in return."
+      "Let us know what Upspark helps you with so we stay focused on what matters."
     ]
   }
 ]
