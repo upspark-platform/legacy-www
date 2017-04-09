@@ -4,8 +4,8 @@
     "icon": "magnifying-glass",
     "title": "Suggestion",
     "descriptionItems": [
-      "I'm always looking for ways to make Upspark better or even better approaches to displaying documentation.",
-      "Be detailed as possible and don't hold back!"
+      "I'm always open to ideas on how to make Upspark better.",
+      "Please be as detailed as possible!"
     ]
   },
 
@@ -26,9 +26,9 @@
   },
 
   {
-    "id": "kuddos",
+    "id": "kudos",
     "icon": "trophy",
-    "title": "Kuddos",
+    "title": "Kudos",
     "descriptionItems": [
       "Drop some love with this selection. Let me know your favorite feature so I know what's making you come back for more.",
       "Expect a hearty thank you in return."
