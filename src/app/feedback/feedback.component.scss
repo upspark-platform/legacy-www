@@ -64,6 +64,9 @@
   height: 200px;
   background: none no-repeat center;
   background-size: cover;
+  &.smaller {
+    height: 150px;
+  }
 }
 .image-button .btn {
   border-radius: 0;

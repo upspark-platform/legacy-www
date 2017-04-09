@@ -71,19 +71,18 @@
         <div class="col-md-5 sm-margin-top" *ngIf="!preview">
 
             <div class="row">
-                <div class="col-8">
+                <div class="col-12">
 
-                    <h3>Optional Image<span class="hidden-md-down">&nbsp;-</span></h3>
-
-                </div>
-                <div class="col-4 text-right">
+                    <h3>Image<span class="hidden-md-down">&nbsp;-</span></h3>
                     <small *ngIf="attachmentError" class="text-error">{{attachmentError}}</small>
+
                 </div>
+
             </div>
 
-            <hr class="thinner">
+            <hr class="thinner" *ngIf="!attachmentError">
 
-            <div class="image-box">
+            <div class="image-box" [class.smaller]="attachmentError">
 
                 <input class="image-selector" type="file" accept="image/*" #image (change)="onImageChange()">
 
@@ -101,7 +100,7 @@
             <div class="row">
                 <div class="col-12">
 
-                    <h3>Image Attached</h3>
+                    <h3>Image <a class="text-info">attached</a></h3>
 
                 </div>
             </div>

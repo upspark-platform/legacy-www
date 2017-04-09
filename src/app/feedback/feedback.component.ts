@@ -75,8 +75,9 @@ export class FeedbackComponent implements OnInit,AfterViewInit {
             return;
         }
 
-        if (upload.size > 10000000) {
-            this.attachmentError = 'Selected file exceeded 10MB';
+
+        if (upload.size > 75000) {
+            this.attachmentError = 'Sorry, that image exceeds our limit of 75 KB. Consider using an external image host and providing us that link.';
             this.resetAttachment();
             return;
         }
@@ -118,7 +119,7 @@ export class FeedbackComponent implements OnInit,AfterViewInit {
             .catch((error: any) => {
                 console.error(error);
 
-                return navigate(true);
+                return navigate(false);
             });
     }
 
