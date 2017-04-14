@@ -1,5 +1,7 @@
-<h1>
+<ul id="toc">
+    <li *ngFor="let block of content.content"><up-markdown-block-link [content]="block"></up-markdown-block-link></li>
+</ul>
 
-    MARKDOWN CONTENT
-
-</h1>
+<div *ngFor="let block of content.flattenedContent">
+    <up-markdown-block [content]="block"></up-markdown-block>
+</div>

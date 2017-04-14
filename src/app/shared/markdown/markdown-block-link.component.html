@@ -1,0 +1,2 @@
+<a href="#{{content.id}}">{{content.title}}</a>
+<li *ngFor="let child of content.children"><up-markdown-block-link [content]="child"></up-markdown-block-link></li>

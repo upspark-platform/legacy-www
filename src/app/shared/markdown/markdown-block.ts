@@ -1,9 +1,15 @@
 export class MarkdownBlock {
 
-    title:string;
-    description:string;
-    markdown:string;
+    constructor(public title:string,
+                public content:string,
+                ...children:MarkdownBlock[]) {
+        this.children = children;
+    }
 
-    html:string;
+    get id():string {
+        return this.title.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    children:MarkdownBlock[];
 
 }
