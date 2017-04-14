@@ -43,7 +43,6 @@ export class DelayedText {
             return Promise.resolve(this.text);
         }
 
-
         return new Promise<string>(this.getBlockExecutor(block, interval));
     }
 
