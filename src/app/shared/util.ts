@@ -6,7 +6,7 @@ export class Util {
         return REG_EXP_EMAIL.test(email);
     }
 
-    static scrollTopTop() {
+    static scrollToTop() {
         $("html, body").stop()
             .animate({ scrollTop: 0 }, "slow");
     }

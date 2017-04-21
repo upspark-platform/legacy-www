@@ -16,7 +16,7 @@ const types: FeedbackType[] = require("./feedback-types");
 export class FeedbackComponent implements OnInit,AfterViewInit {
 
     ngAfterViewInit() {
-        Util.scrollTopTop();
+        Util.scrollToTop();
     }
 
     ngOnInit() {

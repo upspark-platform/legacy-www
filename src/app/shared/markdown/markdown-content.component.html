@@ -1,7 +1,12 @@
-<ul id="toc">
-    <li *ngFor="let block of content.content"><up-markdown-block-link [content]="block"></up-markdown-block-link></li>
-</ul>
+<div class="docs-content">
+    <h1 id="contents">Contents</h1>
 
-<div *ngFor="let block of content.flattenedContent">
-    <up-markdown-block [content]="block"></up-markdown-block>
+    <ul id="toc">
+        <li><a href="#contents" id="markdown-toc-contents" (click)="scroll()">Contents</a></li>
+        <li *ngFor="let block of content.content" up-markdown-block-link [content]="block" class="nav-item"></li>
+    </ul>
+
+    <div *ngFor="let block of content.flattenedContent">
+        <up-markdown-block [content]="block"></up-markdown-block>
+    </div>
 </div>

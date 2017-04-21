@@ -1,2 +1,4 @@
-<a href="#{{content.id}}">{{content.title}}</a>
-<li *ngFor="let child of content.children"><up-markdown-block-link [content]="child"></up-markdown-block-link></li>
+<a class="nav-link" href="#{{content.id}}" (click)="scroll(content.id)">{{content.title}}</a>
+<ul *ngIf="content.children.length">
+    <li class="nav-item" *ngFor="let child of content.children" up-markdown-block-link [content]="child"></li>
+</ul>
