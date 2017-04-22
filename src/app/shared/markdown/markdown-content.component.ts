@@ -1,28 +1,52 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {MarkdownContent} from "./markdown-content";
 import {Util} from "../util";
+import {NavigationEnd, NavigationExtras, Router} from "@angular/router";
+import {MarkdownBlockLinkComponent} from "./markdown-block-link.component";
+import {Subject} from "rxjs/Subject";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'up-markdown-content',
     templateUrl: './markdown-content.component.html',
     styleUrls: ["./markdown-content.component.scss"]
 })
-export class MarkdownContentComponent implements AfterViewInit, OnDestroy {
+export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnInit, OnDestroy {
 
-    private timeout:any;
-    private $window:any;
-    private $body:any;
-    private $toc:any;
-    private $docs:any;
-    private isTOCMode:boolean;
+    ngOnInit() {
+
+    }
+
+    constructor(private router: Router, private title: Title) {
+    }
+
+    private timeout: any;
+    private $window: any;
+    private $body: any;
+    private $toc: any;
+    private $docs: any;
+    private isAlive: boolean;
+    private destroyed: Subject<void> = new Subject<void>();
+    private sleeping:{} = false;
+    private scrolling:boolean;
 
     ngOnDestroy() {
         this.deactivateDocNavigation();
+
+        this.isAlive = false;
+        this.destroyed.next();
+        this.destroyed.complete();
+    }
+
+    dettachWindowEvents() {
+        this.$window.off('resize.theme.nav');
+        this.$window.off('scroll.theme.nav');
+        this.$window.off('scroll.content');
+        this.$window.off('activate.bs.scrollspy.toc');
     }
 
     deactivateDocNavigation() {
-        this.$window.off('resize.theme.nav');
-        this.$window.off('scroll.theme.nav');
+        this.dettachWindowEvents();
 
         this.$toc.css({
             position: '',
@@ -30,31 +54,43 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy {
             top: ''
         });
 
-        if(this.timeout) {
-           clearTimeout(this.timeout);
+        if (this.timeout) {
+            clearTimeout(this.timeout);
         }
     };
 
-    maybeActivateDocNavigation () {
-        if (this.$window.width() > 600) {
-            this.activateDocNavigation();
+    setTitleFromSection(section:string) {
+        const title = section
+            .replace(/-/g, ' ')
+            .split(/\s+/g)
+            .map((part: string) => part.slice(0, 1).toUpperCase().concat(part.slice(1)))
+            .join(' ');
 
-            console.log("active docs");
+        this.title.setTitle(`${META.TITLE} - ${title}`);
+    }
+
+    maybeActivateDocNavigation() {
+        if (!this.isAlive) {
+            return;
+        }
+
+        if (this.$window.width() > 700) {
+            this.activateDocNavigation();
         } else {
             this.deactivateDocNavigation()
         }
     }
 
-    updateCache(cache:any) {
-        const offset:any = this.$docs.offset();
+    updateCache(cache: any) {
+        const offset: any = this.$docs.offset();
 
-        cache.containerTop   = offset.top;
+        cache.containerTop = offset.top;
         cache.containerRight = offset.left + this.$docs.width() + 40;
     }
 
-    measure(cache:any) {
+    measure(cache: any) {
         const scrollTop = this.$window.scrollTop();
-        const distance =  Math.max(scrollTop - cache.containerTop, 0);
+        const distance = Math.max(scrollTop - cache.containerTop, 0);
 
         if (!distance) {
             $(this.$toc.find('li a')[1]).addClass('active');
@@ -73,17 +109,18 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy {
         })
     }
 
-    update(cache:any) {
+    update(cache: any) {
         this.updateCache(cache);
         this.measure(cache);
     }
 
-    scroll() {
-        Util.scrollToTop();
+    setMETA(target:string) {
+        this.setTitleFromSection(target);
     }
 
 
     activateDocNavigation() {
+        this.dettachWindowEvents();
 
         let cache = {};
 
@@ -91,31 +128,79 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy {
         this.measure(cache);
 
         this.$window
-        .on('resize.theme.nav', () => this.update(cache))
-        .on('scroll.theme.nav', () => this.update(cache));
+            .on('resize.theme.nav', () => this.update(cache))
+            .on('scroll.theme.nav', () => this.update(cache));
 
         this.$body.scrollspy({
             target: '#toc',
-            children: 'li > a'
+            children: 'li > a',
+            offset: 100
         });
 
-        if(!this.timeout) {
-            this.timeout = setTimeout(() =>  this.$body.scrollspy('refresh'), 1000);
+        this.$window.on('activate.bs.scrollspy.toc', (event:any, target:any) => {
+            if(this.scrolling) {
+                return;
+            }
+
+            target = target.relatedTarget.slice(1);
+
+            this.sleeping = true;
+
+            let navigationExtras: NavigationExtras = {
+                fragment: target
+            };
+
+            this.router.navigate(
+                [Util.getSlice(this.router.url, '#', true)],
+                navigationExtras,
+            ).then(() => {
+                this.sleeping = false;
+
+                this.setMETA(target);
+            });
+
+        });
+
+        if (!this.timeout) {
+            this.timeout = setTimeout(() => this.$body.scrollspy('refresh'), 500);
         }
     }
 
     ngAfterViewInit() {
+
         this.$toc = $('#toc');
         this.$docs = $('.docs-content');
         this.$body = $('body');
         this.$window = $(window);
 
+        this.dettachWindowEvents();
+
+        this.isAlive = true;
+
         this.maybeActivateDocNavigation();
 
-        this.$window.on('resize', this.maybeActivateDocNavigation.bind(this))
+        this.$window.on('resize.content', this.maybeActivateDocNavigation.bind(this));
+
+        this.router.events
+            .takeUntil(this.destroyed)
+            .filter(event => event instanceof NavigationEnd)
+            .map(event => Util.getSlice(event.url, "#", false))
+            .filter(Boolean)
+            .subscribe(section => {
+                if(this.sleeping) {
+                    return;
+                }
+
+                this.scrolling = true;
+
+                MarkdownBlockLinkComponent.scrollTo(section).then(() => this.scrolling = false);
+
+                this.setMETA(section);
+            });
+
     }
 
     @Input()
-    public content:MarkdownContent;
+    public content: MarkdownContent;
 
 }

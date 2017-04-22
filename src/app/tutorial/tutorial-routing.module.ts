@@ -13,7 +13,7 @@ import {TutorialComponent} from "./tutorial.component";
                         title: 'Upspark - Getting Started',
                     }
                 }
-            },
+            }
         ])
     ],
     exports: [
