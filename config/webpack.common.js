@@ -45,16 +45,6 @@ module.exports = function () {
                         limit: 100000
                     }
                 }
-            },{
-                test: /\.md$/,
-                use: [
-                    {
-                        loader: "html-loader"
-                    },
-                    {
-                        loader: "markdown-loader"
-                    }
-                ]
             }],
         },
         plugins: [
