@@ -3,11 +3,13 @@ import {NgModule} from "@angular/core";
 
 import {RecipesComponent} from "./recipes.component";
 import {RecipesRoutingModule} from "./recipes-routing.module";
+import {MarkdownModule} from "../shared/markdown/markdown.module";
 
 @NgModule({
     imports: [
         CommonModule,
-        RecipesRoutingModule
+        RecipesRoutingModule,
+        MarkdownModule
     ],
     declarations: [
         RecipesComponent

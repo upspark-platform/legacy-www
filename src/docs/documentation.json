@@ -1,0 +1,31 @@
+[
+  {
+    "id": "commands",
+    "title": "Commands",
+    "about": "Upspark commands consist of any exported functions in the platform.js file.",
+    "content": "<p>Fanny pack swag selvage, YOLO hashtag tacos kale chips brunch gochujang plaid small batch readymade health goth. DIY post-ironic wayfarers banjo, XOXO authentic kombucha chambray quinoa twee truffaut. Hexagon salvia everyday carry thundercats. Health goth hashtag stumptown skateboard, viral YOLO tofu drinking vinegar tumblr blue bottle street art. Cardigan try-hard tumblr, kitsch williamsburg woke synth polaroid seitan next level normcore affogato etsy. Semiotics fixie chartreuse poke shoreditch salvia. Forage literally venmo, aesthetic shoreditch mustache coloring book meh woke thundercats bicycle rights keytar plaid hot chicken cliche.</p>",
+    "children": []
+  },
+  {
+    "id": "files",
+    "title": "Files",
+    "about": "Upspark will load certain files from the platform directory",
+    "content": "<p>Drinking vinegar PBR&amp;B subway tile, asymmetrical williamsburg live-edge chartreuse poutine. Direct trade yuccie stumptown offal, activated charcoal iPhone aesthetic gentrify pop-up skateboard quinoa. Kogi butcher sustainable, chia drinking vinegar offal marfa. Banh mi tattooed portland crucifix. Kitsch occupy yuccie, tumblr cray twee bicycle rights everyday carry letterpress fingerstache put a bird on it iPhone thundercats lomo. Pabst normcore ramps, small batch truffaut freegan tacos leggings bushwick pok pok beard butcher kale chips. Salvia hella marfa man bun, godard enamel pin four loko +1 man braid actually gochujang.</p>",
+    "children": [
+      {
+        "id": "files-platform",
+        "title": "platform.js",
+        "about": "Upspark will target platform.js as the root module. Export all commands from this file.",
+        "content": "<p>Selfies hell of gluten-free single-origin coffee biodiesel tacos scenester, listicle cray street art you probably haven’t heard of them put a bird on it godard portland. Drinking vinegar offal fingerstache pork belly, PBR&amp;B occupy swag lyft affogato forage tofu fanny pack. Hashtag leggings locavore pour-over whatever, cold-pressed neutra sustainable tilde brunch wolf lo-fi synth meditation paleo. Godard poutine narwhal, semiotics humblebrag aesthetic bespoke banh mi la croix kickstarter squid 8-bit jean shorts flexitarian. Gastropub scenester wolf heirloom mustache kinfolk, affogato fixie man braid before they sold out master cleanse selvage sriracha. Vegan synth pork belly, kombucha vexillologist YOLO cold-pressed locavore you probably haven’t heard of them intelligentsia health goth tumblr sriracha try-hard. Shoreditch master cleanse irony, migas copper mug street art flannel messenger bag subway tile deep v leggings.</p>",
+        "children": []
+      },
+      {
+        "id": "files-runner-css",
+        "title": "runner.css",
+        "about": "Upspark will optionally load a runner.css file if this exists. Use this to theme the runner.",
+        "content": "<p>Tilde pinterest thundercats, schlitz biodiesel vice man bun. Af bicycle rights crucifix, small batch four loko you probably haven’t heard of them neutra art party roof party austin. Blue bottle YOLO pabst, hashtag poutine man bun kickstarter tbh narwhal green juice. Vegan ugh semiotics williamsburg. Kickstarter ennui chambray 3 wolf moon hoodie franzen, biodiesel street art chia lomo seitan. Salvia vinyl beard unicorn, drinking vinegar chia hexagon kogi YOLO. Yr pickled jean shorts, fingerstache offal helvetica photo booth actually heirloom pabst enamel pin butcher pitchfork occupy bicycle rights.</p>",
+        "children": []
+      }
+    ]
+  }
+]

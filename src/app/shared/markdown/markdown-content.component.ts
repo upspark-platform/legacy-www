@@ -156,7 +156,8 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
             this.sleeping = true;
 
             let navigationExtras: NavigationExtras = {
-                fragment: target
+                fragment: target,
+                skipLocationChange: true
             };
 
             this.router.navigate(
