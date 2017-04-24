@@ -2,7 +2,6 @@ import {MarkdownBlock} from "./markdown-block";
 
 export class MarkdownContent {
 
-    public content:MarkdownBlock[];
     public flattenedContent:MarkdownBlock[];
 
     public flatten(content:MarkdownBlock[]):MarkdownBlock[] {
@@ -19,8 +18,7 @@ export class MarkdownContent {
         return blocks;
     }
 
-    constructor(...content:MarkdownBlock[]) {
-        this.content = content;
+    constructor(public content:MarkdownBlock[]) {
         this.flattenedContent = this.flatten(content);
     }
 

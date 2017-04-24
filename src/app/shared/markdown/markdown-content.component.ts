@@ -5,6 +5,7 @@ import {NavigationEnd, NavigationExtras, Router} from "@angular/router";
 import {MarkdownBlockLinkComponent} from "./markdown-block-link.component";
 import {Subject} from "rxjs/Subject";
 import {Title} from "@angular/platform-browser";
+import {MetaService} from "ng2-meta";
 
 @Component({
     selector: 'up-markdown-content',
@@ -17,7 +18,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
 
     }
 
-    constructor(private router: Router, private title: Title) {
+    constructor(private router: Router, private title: Title, private meta:MetaService) {
     }
 
     private timeout: any;
@@ -115,7 +116,15 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
     }
 
     setMETA(target:string) {
-        this.setTitleFromSection(target);
+        const content = this.content.flattenedContent.find(content => content.id === target);
+        if (!content) {
+            this.setTitleFromSection(target);
+        } else {
+            this.title.setTitle(`${META.TITLE} - ${content.title}`);
+            if (content.about) {
+                this.meta.setTag('description', content.about);
+            }
+        }
     }
 
 

@@ -25,7 +25,7 @@ export class MarkdownBlockLinkComponent {
         return Util.scrollTo(`#${location}`, "fast", "linear", 50, `#${location}__container`);
     }
 
-    public focus(location: string, isNatural:boolean = false) {
+    public focus(location: string):boolean {
 
         let navigationExtras: NavigationExtras = {
             fragment: location
