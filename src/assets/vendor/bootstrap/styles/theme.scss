@@ -386,7 +386,8 @@ body {
   #toc {
     float: right;
     width: 220px;
-    margin-right: -250px; }
+    margin-right: -250px;
+  }
   #toc a {
     color: #555555;
     padding-left: 20px; }
@@ -557,3 +558,9 @@ body {
   background-color: #0275d8;
   background-image: -webkit-linear-gradient(top, #014c8c 0, #0275d8 100%);
   background-image: linear-gradient(to bottom, #014c8c 0, #0275d8 100%); }
+
+@media (max-width: 576px) {
+  #toc {
+    margin-top: 0;
+  }
+}

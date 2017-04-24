@@ -39,7 +39,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
         this.destroyed.complete();
     }
 
-    dettachWindowEvents() {
+    detachWindowEvents() {
         this.$window.off('resize.theme.nav');
         this.$window.off('scroll.theme.nav');
         this.$window.off('scroll.content');
@@ -47,7 +47,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
     }
 
     deactivateDocNavigation() {
-        this.dettachWindowEvents();
+        this.detachWindowEvents();
 
         this.$toc.css({
             position: '',
@@ -75,7 +75,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
             return;
         }
 
-        if (this.$window.width() > 700) {
+        if (this.$window.width() > 768) {
             this.activateDocNavigation();
         } else {
             this.deactivateDocNavigation()
@@ -129,7 +129,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
 
 
     activateDocNavigation() {
-        this.dettachWindowEvents();
+        this.detachWindowEvents();
 
         let cache = {};
 
@@ -183,7 +183,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
         this.$body = $('body');
         this.$window = $(window);
 
-        this.dettachWindowEvents();
+        this.detachWindowEvents();
 
         this.isAlive = true;
 
