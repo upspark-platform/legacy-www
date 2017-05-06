@@ -4,5 +4,6 @@ export class MarkdownBlock {
     about:string = '';
     children: MarkdownBlock[] = [];
     id: string = '';
+    content:string = '';
 
 }

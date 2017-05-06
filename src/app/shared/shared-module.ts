@@ -5,6 +5,7 @@ import {RunnerComponent} from "./runner/runner.component";
 import {CodeComponent} from "./code/code.component";
 import {FooterComponent} from "./footer/footer.component";
 import {RouterModule} from "@angular/router";
+import {SanitizeHtmlPipe} from "./sanitize-html.pipe";
 
 @NgModule({
     imports: [

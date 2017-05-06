@@ -3,6 +3,7 @@ import {NgModule} from "@angular/core";
 import {MarkdownBlockComponent} from "./markdown-block.component";
 import {MarkdownContentComponent} from "./markdown-content.component";
 import {MarkdownBlockLinkComponent} from "./markdown-block-link.component";
+import {SanitizeHtmlPipe} from "../sanitize-html.pipe";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {MarkdownBlockLinkComponent} from "./markdown-block-link.component";
     declarations: [
         MarkdownBlockComponent,
         MarkdownBlockLinkComponent,
-        MarkdownContentComponent
+        MarkdownContentComponent,
+        SanitizeHtmlPipe
     ],
     exports: [
         MarkdownBlockComponent,
@@ -20,6 +22,7 @@ import {MarkdownBlockLinkComponent} from "./markdown-block-link.component";
         MarkdownContentComponent
     ],
     providers: [
+        SanitizeHtmlPipe
     ]
 })
 export class MarkdownModule {}

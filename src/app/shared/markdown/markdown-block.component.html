@@ -1,2 +1,2 @@
 <h4 id="{{content.id}}">{{content.title}}</h4>
-<div [innerHTML]="content.content"></div>
+<div [innerHTML]="content.content | sanitizeHtml"></div>

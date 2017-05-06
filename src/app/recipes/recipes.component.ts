@@ -1,7 +1,10 @@
 import {Component} from "@angular/core";
 import {MarkdownContent} from "../shared/markdown/markdown-content";
 
-const recipes:MarkdownContent = new MarkdownContent(require('../../docs/recipes.json'));
+const recipes:MarkdownContent = new MarkdownContent(
+    require('../../docs/recipes.json'),
+    require('../../docs/recipes.meta.json')
+);
 
 @Component({
     selector: 'up-recipes',

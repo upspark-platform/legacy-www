@@ -3,13 +3,13 @@
     "id": "install",
     "title": "Install",
     "about": "Find the right Upspark package for your operating system and archecture.",
-    "content": "<p>You can get Upspark on your computer by downloading the appropriate package or installer from the <a href=\"https://upspark.io/download\">download</a> page.</p>\n<p>Depending on your architecture the table below helps locate the <a href=\"https://upspark.io/documentation#platform\">platform</a>’s directory.</p>\n<table>\n<thead>\n<tr>\n<th>Operating System</th>\n<th>Platform</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Windows</td>\n<td>%USERPROFILE%/.upspark</td>\n</tr>\n<tr>\n<td>OSX</td>\n<td>~/Library/Application Support/Upspark</td>\n</tr>\n<tr>\n<td>Linux</td>\n<td>$XDG_CONFIG_HOME/Upspark <strong>or</strong> ~/.config/Upspark</td>\n</tr>\n</tbody>\n</table>\n<p>You can also use the system tray menu option <em>Resources</em> to open this directory.</p>",
+    "content": "<p>You can get Upspark on your computer by downloading the appropriate package or installer from the <a href=\"https://upspark.io/download\">download</a> page.</p>\n<p>Refer to the table below to locate the <a href=\"https://upspark.io/documentation#platform\">platform</a>’s directory.</p>\n<table>\n<thead>\n<tr>\n<th>Operating System</th>\n<th>Platform</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Windows</td>\n<td>%USERPROFILE%/.upspark</td>\n</tr>\n<tr>\n<td>OSX</td>\n<td>~/Library/Application Support/Upspark</td>\n</tr>\n<tr>\n<td>Linux</td>\n<td>$XDG_CONFIG_HOME/Upspark <strong>or</strong> ~/.config/Upspark</td>\n</tr>\n</tbody>\n</table>\n<p>You can also use the system tray menu option <em>Resources</em> to open this directory.</p>",
     "children": [
       {
         "id": "included",
         "title": "Included",
-        "about": "Upspark comes with a few files to get you started.",
-        "content": "<p>You’ll notice after launching Upspark for the first time, a few files will exist in this directory. Here’s a table explaining their purpose -</p>\n<table>\n<thead>\n<tr>\n<th>File</th>\n<th>Purpose</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>package.json</td>\n<td>Can be used to install packages with npm or yarn. Additionally the main flag in this document can be changed to point to a new platform script.</td>\n</tr>\n<tr>\n<td>settings.json</td>\n<td>Stores the settings for Upspark. Includes configuration such as location, size, theme and hotkey.</td>\n</tr>\n<tr>\n<td>upspark.log</td>\n<td>Can be used to further understand bugs and issues when using the runner.</td>\n</tr>\n<tr>\n<td>platform.js</td>\n<td>The default entry point for Upspark. This can be changed in settings.json.</td>\n</tr>\n</tbody>\n</table>",
+        "about": "Upspark requires a few important files that get created on first launch.",
+        "content": "<p>After launching Upspark, a few important files will be created.</p>\n<p>If these core files are deleted, Upspark will create a new one in it’s place with the default contents. The only exception is when the package.json is modified to load an alternative main script; Upspark will not create platform.js</p>\n<table>\n<thead>\n<tr>\n<th>File</th>\n<th>Purpose</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>package.json</td>\n<td>Can be used to install packages with npm or yarn. Additionally the main flag in this document can be changed to point to a new platform script.</td>\n</tr>\n<tr>\n<td>settings.json</td>\n<td>Stores the settings for Upspark. Includes configuration such as location, size, theme and hotkey.</td>\n</tr>\n<tr>\n<td>upspark.log</td>\n<td>Can be used to further understand bugs and issues when using the runner.</td>\n</tr>\n<tr>\n<td>platform.js</td>\n<td>The default entry point for Upspark. This can be changed in settings.json.</td>\n</tr>\n</tbody>\n</table>",
         "children": []
       },
       {
@@ -22,10 +22,60 @@
     ]
   },
   {
+    "id": "runner",
+    "title": "Runner",
+    "about": "The runner is the face of Upspark. Execute commands and observe results.",
+    "content": "<p><img src=\"./image/command.png\" alt=\"Upspark Runner\"></p>\n<p>The three main sections of runner pictured above, from bottom left to top right are</p>\n<ul>\n<li>Command History</li>\n<li>Command Input</li>\n<li>Command Output</li>\n</ul>\n<p>When opened or toggled, Upspark will focus on the command input.</p>",
+    "children": [
+      {
+        "id": "commands",
+        "title": "Commands",
+        "about": "Upspark commands are executed by typing the command name and pressing enter.",
+        "content": "<p>To run a task, type the command and press <em>enter</em>. The format of a command is -</p>\n<pre><code>[type]task[arg1 arg2 arg3 argN...]\n</code></pre>\n<p>The command type decides how Upspark will execute the task. When no type is provided, Upspark will execute the task against your platform script <em>(labeled Platform below)</em>.</p>\n<table>\n<thead>\n<tr>\n<th>Type</th>\n<th>Prefix</th>\n<th>Execution</th>\n<th>Example</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Platform</td>\n<td><strong>#</strong></td>\n<td>Upspark will attempt to execute any exported function in <em>platform.js</em> that has the same name as the <strong>task</strong>. Any arguments are passed as arguments to the function. If possible, The runner will display the returned result. <em><a href=\"/tutorial#scripting\">see scripting further down</a></em></td>\n<td>hello</td>\n</tr>\n<tr>\n<td>System</td>\n<td><strong>:</strong></td>\n<td>Upspark will run the task against available system commands. Note, system commands are not user controlled. <em><a href=\"/documentation#system-commands\">see a full list of system commands here</a></em></td>\n<td>:reload :clear :platform :settings</td>\n</tr>\n<tr>\n<td>Runtime</td>\n<td><strong>&gt;</strong></td>\n<td>Upspark will proxy the task and the arguments against the current machine’s shell.</td>\n<td>&gt;ping &gt;node &gt;ls-a</td>\n</tr>\n</tbody>\n</table>\n<p>Pressing <strong>ESCAPE</strong> will clear the current command input.</p>",
+        "children": []
+      },
+      {
+        "id": "arguments",
+        "title": "Arguments",
+        "about": "Upspark commands can be linked with optional arguments.",
+        "content": "<p><img src=\"./image/arguments.png\" alt=\"Upspark Commands\"></p>\n<p>Commands for a task are separated by a single space. In order to provide a task a <em>multiline</em> argument, ctrl + space can be pressed.</p>\n<p><img src=\"./image/multiline-arguments.png\" alt=\"Multiline Argument\"></p>\n<p>Here’s a table outlining the hotkeys used to handle arguments and navigate between these.</p>\n<table>\n<thead>\n<tr>\n<th>Hotkey</th>\n<th>Action</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>CTRL + SPACE</td>\n<td>Create new multiline argument <strong>or</strong> will navigate to the next available argument</td>\n</tr>\n<tr>\n<td>CTRL + SHIFT + SPACE</td>\n<td>Navigate to the last argument or the command input</td>\n</tr>\n<tr>\n<td>SHIFT + ENTER</td>\n<td>Remove current multiline argument</td>\n</tr>\n</tbody>\n</table>\n<p>Note, when the application is focused on multiline argument: <strong>CTRL + ENTER</strong> can be used to execute a command.</p>",
+        "children": []
+      },
+      {
+        "id": "execution",
+        "title": "Execution",
+        "about": "Upspark commands are labeled in the history pane to indicate their current execution status.",
+        "content": "<p>When commands are executed the command history will populate with the command name and indicate the task’s current status.</p>\n<p>A successful command execution is indicated by a command that is underlined blue.</p>\n<p><img src=\"./image/success.png\" alt=\"Successful\"></p>\n<p>When the command is underlined with an intermediate progress bar, the command is still executing.</p>\n<p><img src=\"./image/progress.png\" alt=\"In Progress\"></p>\n<p>When the command is underlined with a red bar, this indicates an error has occurred. This is followed by an error message indicating the root cause.</p>\n<p><img src=\"./image/invalid.png\" alt=\"Error\"></p>",
+        "children": []
+      },
+      {
+        "id": "history",
+        "title": "History",
+        "about": "Upspark will store up to 200 historical commands.",
+        "content": "<p>Command history can be navigated by using the arrow keys. When navigating commands, Upspark will restore the command and it’s arguments. This can be helpful for re-executing a task.</p>\n<p>An arrow indicates the current command in focus.</p>\n<p><img src=\"./image/history.png\" alt=\"Successful\"></p>\n<p>Note, a grey underline means the last time this command was executed was not in the current session. In this case, the command output will not be displayed.</p>\n<p>Any command still in progress can be canceled by being focused and pressing <strong>CTRL + C</strong></p>\n<p><img src=\"./image/abort.png\" alt=\"Abort\"></p>",
+        "children": []
+      },
+      {
+        "id": "repl",
+        "title": "REPL",
+        "about": "Use the history view of Upspark to communicate with a REPL process.",
+        "content": "<p>You can send messages to a long running process by entering REPL mode.</p>\n<p>This is done by focusing on the command in historical view -\n<img src=\"./image/repl-start.png\" alt=\"Focus on REPL\"></p>\n<p>Then by pressing the <strong>right arrow</strong>. This will cause Upspark to toggle REPL mode, in which any command will be proxied to the focused task.</p>\n<p>In this case, to the node.js process.\n<img src=\"./image/repl.png\" alt=\"REPL mode\"></p>\n<p>History from the current REPL session will display in the command output.\n<img src=\"./image/repl-example.png\" alt=\"REPL mode\"></p>\n<p>Press <strong>left arrow</strong> to exit REPL mode.</p>",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "logs",
+    "title": "Logs",
+    "about": "Use Upspark logs to identify issues.",
+    "content": "<p>Upspark emits all of it’s runtime efforts to the upspark.log file in the platform directory.</p>\n<p>This is the first place to look when issues occur.</p>\n<p>Use the <strong>:log</strong> system command to open this file easier.</p>\n<p><img src=\"./image/log.png\" alt=\"Log Command\"></p>",
+    "children": []
+  },
+  {
     "id": "scripting",
     "title": "Scripting",
     "about": "Use the platform script to create and export commands.",
-    "content": "<p>Crucifix man braid cold-pressed, flannel asymmetrical humblebrag paleo typewriter swag. Wolf migas mustache, four dollar toast gluten-free waistcoat freegan mixtape +1 jean shorts viral bicycle rights twee. Narwhal tumeric stumptown swag banjo waistcoat sartorial listicle. Mumblecore 8-bit small batch wolf wayfarers fam. Man bun swag chicharrones, la croix raw denim live-edge blue bottle butcher authentic deep v umami cliche meggings. Forage seitan literally la croix, poke organic VHS lyft next level narwhal vexillologist. Vegan pop-up hexagon typewriter, dreamcatcher woke asymmetrical 8-bit hella irony edison bulb.</p>\n<p>Helvetica meggings hexagon lo-fi, mumblecore deep v mixtape etsy. Sriracha slow-carb tbh pitchfork pok pok. Bespoke cold-pressed dreamcatcher jean shorts affogato. Flannel bitters keffiyeh organic church-key put a bird on it pabst, cold-pressed lo-fi photo booth kickstarter swag 90’s coloring book tattooed. Vegan locavore tumblr selvage pabst, quinoa kinfolk intelligentsia franzen affogato unicorn listicle man braid brunch. Church-key selfies literally hexagon flannel franzen, hell of pug XOXO. Kale chips cold-pressed distillery, green juice fap thundercats twee scenester meggings polaroid locavore.</p>",
+    "content": "<p>Using the platform with your own script logic is as easy as exporting functions from the <strong>platform.js</strong> file.</p>\n<h2>Reloading</h2>\n<p>When saving a command in platform.js, there’s a couple of ways to reload commands.</p>\n<ul>\n<li>Restarting Upspark</li>\n<li>Clicking <strong>Reload</strong> in the task bar context menu</li>\n</ul>\n<p>The simplest way to reload commands is by executing <strong>:reload</strong> in the runner -</p>\n<p><img src=\"./image/reload.png\" alt=\"Reload Command\"></p>\n<h2>Command Logic</h2>\n<p>Here’s an example of a basic command that simply returns the argument to the user.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">echo</span>(<span class=\"hljs-params\">argument</span>) </span>{\n\t<span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">'You said \"'</span> + argument + <span class=\"hljs-string\">'\"'</span>;\n}\n</code></pre>\n<p>The task title is <strong>echo</strong>. To execute the command, type <strong>echo</strong> with the argument on the runner.</p>\n<p><img src=\".%5Cimage%5Cecho.png\" alt=\"Echo Command\"></p>\n<p>Because <strong>argument</strong> is used without any existence checking, when no argument is supplied -</p>\n<p><img src=\"./image/echo-argless.png\" alt=\"Echo Command, with no argument\"></p>\n<h2>Null Checking</h2>\n<hr>\n<p>Here’s an updated echo command with null checking -</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">echo</span>(<span class=\"hljs-params\">argument</span>) </span>{\n\t<span class=\"hljs-keyword\">if</span>(<span class=\"hljs-keyword\">typeof</span> argument === <span class=\"hljs-string\">'undefined'</span>) {\n\t\targument = <span class=\"hljs-string\">'nothing'</span>;\n\t}\n\n\t<span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">'You said \"'</span> + argument + <span class=\"hljs-string\">'\"'</span>;\n}\n</code></pre>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">const</span> echo = <span class=\"hljs-function\"><span class=\"hljs-params\">argument</span> =&gt;</span> <span class=\"hljs-string\">`You said \"<span class=\"hljs-subst\">${}</span>\"`</span>;\n</code></pre>\n<p>Crucifix man braid cold-pressed, flannel asymmetrical humblebrag paleo typewriter swag. Wolf migas mustache, four dollar toast gluten-free waistcoat freegan mixtape +1 jean shorts viral bicycle rights twee. Narwhal tumeric stumptown swag banjo waistcoat sartorial listicle. Mumblecore 8-bit small batch wolf wayfarers fam. Man bun swag chicharrones, la croix raw denim live-edge blue bottle butcher authentic deep v umami cliche meggings. Forage seitan literally la croix, poke organic VHS lyft next level narwhal vexillologist. Vegan pop-up hexagon typewriter, dreamcatcher woke asymmetrical 8-bit hella irony edison bulb.</p>\n<p>Helvetica meggings hexagon lo-fi, mumblecore deep v mixtape etsy. Sriracha slow-carb tbh pitchfork pok pok. Bespoke cold-pressed dreamcatcher jean shorts affogato. Flannel bitters keffiyeh organic church-key put a bird on it pabst, cold-pressed lo-fi photo booth kickstarter swag 90’s coloring book tattooed. Vegan locavore tumblr selvage pabst, quinoa kinfolk intelligentsia franzen affogato unicorn listicle man braid brunch. Church-key selfies literally hexagon flannel franzen, hell of pug XOXO. Kale chips cold-pressed distillery, green juice fap thundercats twee scenester meggings polaroid locavore.</p>",
     "children": [
       {
         "id": "importing",
@@ -35,5 +85,12 @@
         "children": []
       }
     ]
+  },
+  {
+    "id": "settings",
+    "title": "Settings",
+    "about": "Use Upspark settings to tweek the runner and runtime.",
+    "content": "<p>Activated charcoal literally jean shorts mlkshk. Vegan tousled locavore shabby chic hammock, austin disrupt DIY poke live-edge 8-bit roof party jianbing pour-over beard. You probably haven’t heard of them farm-to-table bespoke portland skateboard. Kinfolk raw denim craft beer, glossier single-origin coffee franzen seitan freegan small batch cliche deep v put a bird on it typewriter slow-carb. Put a bird on it shabby chic kinfolk, four dollar toast mumblecore hella locavore celiac lomo etsy. Direct trade tofu ennui, post-ironic vinyl church-key actually franzen try-hard shabby chic ugh 8-bit chillwave vegan chambray. +1 bushwick hexagon snackwave yr microdosing.</p>\n<p>Pickled raw denim biodiesel edison bulb, swag hoodie polaroid chicharrones fixie actually brooklyn tumeric gentrify. Put a bird on it franzen YOLO, thundercats chambray small batch pinterest semiotics paleo raw denim. Bitters offal blue bottle ennui etsy vinyl. Etsy tote bag mixtape trust fund, viral swag master cleanse slow-carb. Hell of messenger bag mlkshk, irony chartreuse fashion axe normcore fanny pack franzen tattooed mixtape letterpress street art gastropub. Marfa fam freegan shoreditch mlkshk +1. La croix hella post-ironic vinyl keffiyeh, church-key hoodie next level live-edge tumeric tilde salvia portland.</p>",
+    "children": []
   }
 ]

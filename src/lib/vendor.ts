@@ -19,5 +19,4 @@ window["Tether"] = require('vendor/bootstrap/scripts/tether.min.js');
 
 // Bootstrap
 import 'vendor/bootstrap/scripts/toolkit';
-import 'vendor/bootstrap/scripts/application';
 

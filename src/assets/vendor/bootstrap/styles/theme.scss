@@ -330,8 +330,7 @@ html,body {
     border-radius: 0 0 3px 3px; } }
 
 body {
-  overflow-x: hidden;
-  padding-bottom: 40px; }
+  overflow-x: hidden; }
 
 .docs-header {
   padding-top: 60px;
@@ -431,6 +430,22 @@ body {
     margin-left: -15px;
     border-radius: 0; } }
 
+.docs-content h2 {
+  font-size: 1em;
+  display: inline-block;
+  z-index: 3;
+  position: relative;
+  background: white;
+}
+.docs-content h2::before {
+  content: '';
+  width: 100%;
+  border-bottom: solid 1px #fff;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: 1;
+}
 .docs-content {
   font-size: 16px; }
 .docs-content > h1 {
@@ -563,4 +578,9 @@ body {
   #toc {
     margin-top: 0;
   }
+}
+
+.docs-content img {
+  width: 100%;
+  margin-top: 5px;
 }

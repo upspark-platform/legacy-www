@@ -18,7 +18,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
 
     }
 
-    constructor(private router: Router, private title: Title, private meta:MetaService) {
+    constructor(private router: Router, private title: Title, private meta: MetaService) {
     }
 
     private timeout: any;
@@ -28,8 +28,8 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
     private $docs: any;
     private isAlive: boolean;
     private destroyed: Subject<void> = new Subject<void>();
-    private sleeping:{} = false;
-    private scrolling:boolean;
+    private sleeping: {} = false;
+    private scrolling: boolean;
 
     ngOnDestroy() {
         this.deactivateDocNavigation();
@@ -60,7 +60,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
         }
     };
 
-    setTitleFromSection(section:string) {
+    setTitleFromSection(section: string) {
         const title = section
             .replace(/-/g, ' ')
             .split(/\s+/g)
@@ -115,7 +115,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
         this.measure(cache);
     }
 
-    setMETA(target:string) {
+    setMETA(target: string) {
         const content = this.content.flattenedContent.find(content => content.id === target);
         if (!content) {
             this.setTitleFromSection(target);
@@ -146,8 +146,8 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
             offset: 100
         });
 
-        this.$window.on('activate.bs.scrollspy.toc', (event:any, target:any) => {
-            if(this.scrolling) {
+        this.$window.on('activate.bs.scrollspy.toc', (event: any, target: any) => {
+            if (this.scrolling) {
                 return;
             }
 
@@ -197,7 +197,7 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
             .map(event => Util.getSlice(event.url, "#", false))
             .filter(Boolean)
             .subscribe(section => {
-                if(this.sleeping) {
+                if (this.sleeping) {
                     return;
                 }
 
@@ -208,6 +208,26 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
                 this.setMETA(section);
             });
 
+        $(".markdown-image").each(function () {
+            const $image = $(this);
+            const $loader = $image.find(".markdown-image-loader-modal");
+            const source = $image.find(".markdown-image-source").text();
+
+            let xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                const reader = new FileReader();
+
+                reader.onloadend = function() {
+                    $image.css("background-image", `url("${reader.result}")`);
+                    $loader.fadeOut("slow");
+                };
+
+                reader.readAsDataURL(xhr.response);
+            };
+            xhr.open('GET', source);
+            xhr.responseType = 'blob';
+            xhr.send();
+        });
     }
 
     @Input()

@@ -1,7 +1,10 @@
 import {Component} from "@angular/core";
 import {MarkdownContent} from "../shared/markdown/markdown-content";
 
-const documentation:MarkdownContent = new MarkdownContent(require('../../docs/documentation.json'));
+const documentation:MarkdownContent = new MarkdownContent(
+    require('../../docs/documentation.json'),
+    require('../../docs/documentation.meta.json')
+);
 
 @Component({
     selector: 'up-documentation',
