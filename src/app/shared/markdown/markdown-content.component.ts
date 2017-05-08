@@ -209,24 +209,31 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
             });
 
         $(".markdown-image").each(function () {
+
             const $image = $(this);
+            const $sourceElement = $image.find(".markdown-image-source");
+            const source = $sourceElement.text();
             const $loader = $image.find(".markdown-image-loader-modal");
-            const source = $image.find(".markdown-image-source").text();
+            const xhr = new XMLHttpRequest();
+            const reader = new FileReader();
 
-            let xhr = new XMLHttpRequest();
-            xhr.onload = function() {
-                const reader = new FileReader();
+            $sourceElement.remove();
 
-                reader.onloadend = function() {
-                    $image.css("background-image", `url("${reader.result}")`);
-                    $loader.fadeOut("slow");
-                };
+            reader.onloadend = () => {
+                const result = `url("${reader.result}")`;
+                $loader.addClass("hide");
 
-                reader.readAsDataURL(xhr.response);
+                setTimeout(() => {
+                    $image.css("background-image", result);
+                }, 500);
             };
+
+            xhr.onload = () => reader.readAsDataURL(xhr.response);
             xhr.open('GET', source);
             xhr.responseType = 'blob';
             xhr.send();
+
+
         });
     }
 

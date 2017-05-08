@@ -432,19 +432,7 @@ body {
 
 .docs-content h2 {
   font-size: 1em;
-  display: inline-block;
-  z-index: 3;
-  position: relative;
-  background: white;
-}
-.docs-content h2::before {
-  content: '';
-  width: 100%;
-  border-bottom: solid 1px #fff;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  z-index: 1;
+  font-weight: 500;
 }
 .docs-content {
   font-size: 16px; }
@@ -578,9 +566,4 @@ body {
   #toc {
     margin-top: 0;
   }
-}
-
-.docs-content img {
-  width: 100%;
-  margin-top: 5px;
 }
