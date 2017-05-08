@@ -221,11 +221,10 @@ export class MarkdownContentComponent implements AfterViewInit, OnDestroy, OnIni
 
             reader.onloadend = () => {
                 const result = `url("${reader.result}")`;
+
                 $loader.addClass("hide");
 
-                setTimeout(() => {
-                    $image.css("background-image", result);
-                }, 500);
+                setTimeout(() => $image.css("background-image", result), 500);
             };
 
             xhr.onload = () => reader.readAsDataURL(xhr.response);

@@ -36,11 +36,12 @@ export class MarkdownContent {
             const result: string[] = [];
 
             html.forEach((htmlElement: HTMLElement) => {
-                if(!htmlElement.outerHTML || !htmlElement.innerHTML) {
+                if(htmlElement.tagName === 'P'
+                    && (!htmlElement.outerHTML || !htmlElement.innerHTML)) {
                     return;
                 }
 
-                const element = $(`<content>${htmlElement.outerHTML}</content>`);
+                const element = $(`<content>${htmlElement.outerHTML || ''}</content>`);
 
                 element.find("h2").html((index: number, html: string) => {
                     return `<span>${html}</span>`;
@@ -49,7 +50,7 @@ export class MarkdownContent {
 
                 element.find("img").replaceWith(function () {
                     const $img = $(this);
-                    const source = decodeURI($img.attr("src"))
+                    const source = decodeURI($img.attr("src"));
 
                     let key = source.replace(/\//g, "\\");
                     if (key.startsWith(".\\")) {
