@@ -10,7 +10,6 @@ import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 import {FeedbackModule} from "./feedback/feedback.module";
 import {DocumentationModule} from "./documentation/documentation.module";
 import {TutorialModule} from "./tutorial/tutorial.module";
-import {RecipesModule} from "./recipes/recipes.module";
 
 @NgModule({
     imports: [
@@ -21,7 +20,6 @@ import {RecipesModule} from "./recipes/recipes.module";
         DownloadsModule,
         DocumentationModule,
         TutorialModule,
-        RecipesModule,
         RouterModule.forRoot([{
             path: '**',
             redirectTo: "/"
