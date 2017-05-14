@@ -386,6 +386,9 @@ body {
     float: right;
     width: 220px;
     margin-right: -250px;
+    overflow-y: auto;
+    height: 90%;
+    overflow-x: auto;
   }
   #toc a {
     color: #555555;

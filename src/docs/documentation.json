@@ -1,5 +1,883 @@
 [
   {
+    "id": "system-commands",
+    "title": "System",
+    "about": "Upspark provides system commands to control the current platform state and navigate to interfaces.",
+    "content": "<p>Upspark provides system commands to help control the current platform state. There are also some system commands that help navigate to important interfaces and file locations.</p>\n<p>System commands are prefixed with the <strong>:</strong> (<em>colon character</em>)</p>\n<p>Depending on the system command an argument can be provided.</p>\n<p>Just like normal command executions a long running system command can be stopped by using <strong>CTRL + C</strong> on the task in the <a href=\"/tutorial#history\">history window</a>.</p>",
+    "children": [
+      {
+        "id": "system-reload",
+        "title": "reload",
+        "about": "The reload task will reload the targeted resource such as the theme or the platform script.",
+        "content": "<pre><code class=\"language-javascript\">:reload ALL|COMMANDS|SETTINGS|THEME\n</code></pre>\n<p>The reload task with no argument (<em>or ALL</em>) will reload the <strong>platform.js</strong>, <strong>settings.json</strong>, <strong>runner.css</strong> and <strong>global.css</strong> files.</p>",
+        "children": []
+      },
+      {
+        "id": "system-platform",
+        "title": "platform",
+        "about": "The platform task will open the platform script.",
+        "content": "<pre><code class=\"language-javascript\">:platform\n</code></pre>\n<p>The platform task will open the platform script. Unless changed by <strong>package.json</strong>, this will be the <strong>platform.js</strong> file.</p>",
+        "children": []
+      },
+      {
+        "id": "system-log",
+        "title": "log",
+        "about": "The log task will open the Upspark log file.",
+        "content": "<pre><code class=\"language-javascript\">:log\n</code></pre>\n<p>The log task will open the application’s log file, <strong>upspark.log</strong>.</p>",
+        "children": []
+      },
+      {
+        "id": "system-end",
+        "title": "end",
+        "about": "The end task will kill any running tasks.",
+        "content": "<pre><code class=\"language-javascript\">:end\n</code></pre>\n<p>The end task will interrupt and kill all ongoing tasks.</p>",
+        "children": []
+      },
+      {
+        "id": "system-safe",
+        "title": "safe",
+        "about": "The safe task will open up the Upspark Safe.",
+        "content": "<pre><code class=\"language-javascript\">:safe\n</code></pre>\n<p>The safe task will simply open the Upspark Safe.</p>",
+        "children": []
+      },
+      {
+        "id": "system-clear",
+        "title": "clear",
+        "about": "The clear task will wipe the runner's visible tasks and clear the current command.",
+        "content": "<pre><code class=\"language-javascript\">:clear\n</code></pre>\n<p>The clear task will wipe the history view and any command + arguments from the runner. Note, this will not end the tasks - simply clear them from view.</p>",
+        "children": []
+      },
+      {
+        "id": "system-exit",
+        "title": "exit",
+        "about": "The exit task will shutdown Upspark.",
+        "content": "<pre><code class=\"language-javascript\">:exit\n</code></pre>\n<p>The exit task will shutdown Upspark and any running child processes.</p>",
+        "children": []
+      },
+      {
+        "id": "system-hide",
+        "title": "hide",
+        "about": "The hide task will hide the runner.",
+        "content": "<pre><code class=\"language-javascript\">:hide\n</code></pre>\n<p>The hide task will hide the runner.</p>",
+        "children": []
+      },
+      {
+        "id": "system-path",
+        "title": "path",
+        "about": "The path task will display the current working directory.",
+        "content": "<pre><code class=\"language-javascript\">:path\n</code></pre>\n<p>The path task will display Upspark’s current working directory.</p>",
+        "children": []
+      },
+      {
+        "id": "system-cd",
+        "title": "cd",
+        "about": "The cd task will set Upspark's current working directory.",
+        "content": "<pre><code class=\"language-javascript\">:cd <span class=\"hljs-literal\">null</span>|...path\n</code></pre>\n<p>The cd task will set Upspark’s current working directory to the targeted path. By default this the <a href=\"/tutorial#install\">platform directory</a>.</p>\n<p>This task can accept the targeted path in chunks.</p>\n<pre><code class=\"language-javascript\">:cd ./ folderParent folderChild folderX\n</code></pre>\n<p>Which is equivalent to</p>\n<pre><code class=\"language-javascript\">:cd ./folderParent/folderChild/folderX\n</code></pre>\n<p>To reset the current working directory to the default location, pass no arguments to cd</p>\n<pre><code class=\"language-javascript\">:cd\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "system-env",
+        "title": "env",
+        "about": "The env task can be used to manage Upspark's environment variables sent to commands.",
+        "content": "<pre><code class=\"language-javascript\">:env <span class=\"hljs-literal\">null</span>|SET VAR VALUE|DELETE VAR\n</code></pre>\n<p>The env task helps establishing temporary environment variables used by tasks. When in a child process (platform command context), values displayed in env can be accessed in the <a href=\"https://nodejs.org/api/process.html#process_process_env\">process.env</a> property.</p>\n<p>Set a property (<em>a=xxx</em>)</p>\n<pre><code class=\"language-javascript\">:env set a xxxx\n</code></pre>\n<p>Remove a property (<em>a</em>)</p>\n<pre><code class=\"language-javascript\">:env <span class=\"hljs-keyword\">delete</span> a\n</code></pre>\n<p>List properties</p>\n<pre><code class=\"language-javascript\">:env\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "system-open",
+        "title": "open",
+        "about": "The open task will open the argument with the default file association.",
+        "content": "<pre><code class=\"language-javascript\">:open <span class=\"hljs-literal\">null</span>|...path\n</code></pre>\n<p>The open task will open the target with the default file association.</p>\n<ul>\n<li>Folders will open with the default file explorer</li>\n</ul>\n<p>If the path argument provided is not absolute, it will be pre-pended with Upspark’s current working directory (<em>platform directory by default</em>)</p>",
+        "children": []
+      },
+      {
+        "id": "system-dev",
+        "title": "dev",
+        "about": "The dev task will open the developer tools.",
+        "content": "<pre><code class=\"language-javascript\">:dev\n</code></pre>\n<p>The dev task will open the chromium development tools. This is helpful for designing or debugging.</p>",
+        "children": []
+      },
+      {
+        "id": "system-settings",
+        "title": "settings",
+        "about": "The settings task will open the settings window.",
+        "content": "<pre><code class=\"language-javascript\">:settings\n</code></pre>\n<p>The settings task will open the application settings.</p>",
+        "children": []
+      },
+      {
+        "id": "system-config",
+        "title": "config",
+        "about": "The config task will open the settings file.",
+        "content": "<pre><code class=\"language-javascript\">:config\n</code></pre>\n<p>The config task will open the settings file, <strong>settings.json</strong>.</p>",
+        "children": []
+      },
+      {
+        "id": "system-resources",
+        "title": "resources",
+        "about": "The resources task will open the platform directory.",
+        "content": "<pre><code class=\"language-javascript\">:resources\n</code></pre>\n<p>The resources task will open the platform directory.</p>",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "api",
+    "title": "API",
+    "about": "Upspark comes pre-packaged with a light weight promised based API to help with simple tasks.",
+    "content": "<p>Upspark comes prepacked with a light weight <em>promise</em> based API to help with simple tasks.</p>\n<table>\n<thead>\n<tr>\n<th>Route</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><a href=\"/documentation#api-safe\">upspark/safe</a></td>\n<td>Get values stored in the <a href=\"/tutorial#safe\">safe</a>.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-platform\">upspark/platform</a></td>\n<td>Get platform commands or reload the platform script.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-runner\">upspark/runner</a></td>\n<td>Control the main runner and execute tasks.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-settings\">upspark/settings</a></td>\n<td>Get and set <a href=\"/tutorial#settings\">settings</a>.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-logger\">upspark/logger</a></td>\n<td>Log information to the log file.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-desktop\">upspark/desktop</a></td>\n<td>Open host applications and control the clipboard.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-file\">upspark/file</a></td>\n<td>Basic file operations e.g. stat, copy, move, delete, create and more.</td>\n</tr>\n<tr>\n<td><a href=\"/documentation#api-net\">upspark/net</a></td>\n<td>Make HTTP calls with the request api.</td>\n</tr>\n</tbody>\n</table>\n<p>Here’s an example of using the API in <strong>platform.js</strong></p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Desktop <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/desktop'</span>\n\n<span class=\"hljs-comment\">// Attach the argument to the clipboard and return the previous result</span>\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">const</span> replace = <span class=\"hljs-function\">(<span class=\"hljs-params\">arg</span>) =&gt;</span> Desktop\n\t.getClipboardText()\n\t.then(<span class=\"hljs-function\"><span class=\"hljs-params\">text</span> =&gt;</span> {\n\t\tDesktop.setClipboardText(arg);\n\t\t\n\t\t<span class=\"hljs-keyword\">return</span> text;\n\t})\n</code></pre>",
+    "children": [
+      {
+        "id": "api-platform",
+        "title": "Platform",
+        "about": "Upspark's Platform API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Platform <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/platform'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-platform-all",
+            "title": "Platform.ALL",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.ALL = <span class=\"hljs-string\">\"0\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-scripts",
+            "title": "Platform.SCRIPTS",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.SCRIPTS = <span class=\"hljs-string\">\"1\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-settings",
+            "title": "Platform.SETTINGS",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.SETTINGS = <span class=\"hljs-string\">\"2\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-theme",
+            "title": "Platform.THEME",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.THEME = <span class=\"hljs-string\">\"4\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-reload",
+            "title": "Platform.reload()",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.reload(mode)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-getpath",
+            "title": "Platform.getPath()",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.getPath()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-getplatformcommands",
+            "title": "Platform.getPlatformCommands()",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.getPlatformCommands()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-getinternalcommands",
+            "title": "Platform.getInternalCommands()",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.getInternalCommands()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-platform-getcommands",
+            "title": "Platform.getCommands()",
+            "about": "Upspark's Platform API module.",
+            "content": "<pre><code class=\"language-javascript\">Platform.getCommands()\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-desktop",
+        "title": "Desktop",
+        "about": "Upspark's Desktop API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Desktop <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/desktop'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-desktop-text",
+            "title": "Desktop.TEXT",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.TEXT = <span class=\"hljs-string\">\"text\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-html",
+            "title": "Desktop.HTML",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.HTML = <span class=\"hljs-string\">\"html\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-image",
+            "title": "Desktop.IMAGE",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.IMAGE = <span class=\"hljs-string\">\"image\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-rtf",
+            "title": "Desktop.RTF",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.RTF = <span class=\"hljs-string\">\"rtf\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-bookmark",
+            "title": "Desktop.BOOKMARK",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.BOOKMARK = <span class=\"hljs-string\">\"bookmark\"</span>\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setfindtext",
+            "title": "Desktop.setFindText()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setFindText(text)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboard",
+            "title": "Desktop.setClipboard()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboard(result,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboardtext",
+            "title": "Desktop.setClipboardText()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboardText(text,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboardhtml",
+            "title": "Desktop.setClipboardHTML()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboardHTML(html,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboardimage",
+            "title": "Desktop.setClipboardImage()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboardImage(path,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboardrtf",
+            "title": "Desktop.setClipboardRTF()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboardRTF(rft,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-setclipboardbookmark",
+            "title": "Desktop.setClipboardBookmark()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.setClipboardBookmark(bookmark,format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardformats",
+            "title": "Desktop.getClipboardFormats()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardFormats(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardbookmark",
+            "title": "Desktop.getClipboardBookmark()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardBookmark(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardrtf",
+            "title": "Desktop.getClipboardRTF()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardRTF(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardimage",
+            "title": "Desktop.getClipboardImage()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardImage(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardhtml",
+            "title": "Desktop.getClipboardHTML()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardHTML(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getclipboardtext",
+            "title": "Desktop.getClipboardText()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getClipboardText(format)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-getfindtext",
+            "title": "Desktop.getFindText()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.getFindText()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-beep",
+            "title": "Desktop.beep()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.beep()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-openlocation",
+            "title": "Desktop.openLocation()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.openLocation(location)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-moveitemtotrash",
+            "title": "Desktop.moveItemToTrash()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.moveItemToTrash(location)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-open",
+            "title": "Desktop.open()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.open(location)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-desktop-openuri",
+            "title": "Desktop.openURI()",
+            "about": "Upspark's Desktop API module.",
+            "content": "<pre><code class=\"language-javascript\">Desktop.openURI(location)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-file",
+        "title": "File",
+        "about": "Upspark's File API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> File <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/file'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-file-access",
+            "title": "File.access()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.access(path,mode,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-stat",
+            "title": "File.stat()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.stat(path)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-chmod",
+            "title": "File.chmod()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.chmod(path,mode,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-chown",
+            "title": "File.chown()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.chown(path,uid,=,<span class=\"hljs-literal\">null</span>,gid,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-write",
+            "title": "File.write()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.write(path,contents,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-append",
+            "title": "File.append()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.append(path,contents,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-read",
+            "title": "File.read()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.read(path,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-readjson",
+            "title": "File.readJSON()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.readJSON(path,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-writejson",
+            "title": "File.writeJSON()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.writeJSON(path,contents,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-list",
+            "title": "File.list()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.list(path)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-createpath",
+            "title": "File.createPath()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.createPath(path)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-resolve",
+            "title": "File.resolve()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.resolve(...path)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-createfile",
+            "title": "File.createFile()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.createFile(path,contents,options)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-remove",
+            "title": "File.remove()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.remove(path)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-move",
+            "title": "File.move()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.move(src,dst)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-copy",
+            "title": "File.copy()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.copy(src,dst)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-file-rename",
+            "title": "File.rename()",
+            "about": "Upspark's File API module.",
+            "content": "<pre><code class=\"language-javascript\">File.rename(path,name)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-logger",
+        "title": "Logger",
+        "about": "Upspark's Logger API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Logger <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/logger'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-logger-info",
+            "title": "Logger.info()",
+            "about": "Upspark's Logger API module.",
+            "content": "<pre><code class=\"language-javascript\">Logger.info(message)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-logger-error",
+            "title": "Logger.error()",
+            "about": "Upspark's Logger API module.",
+            "content": "<pre><code class=\"language-javascript\">Logger.error(message)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-net",
+        "title": "Net",
+        "about": "Upspark's Net API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Net <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/net'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-net-get",
+            "title": "Net.get()",
+            "about": "Upspark's Net API module.",
+            "content": "<pre><code class=\"language-javascript\">Net.get(url,=,<span class=\"hljs-literal\">null</span>,qs,=,<span class=\"hljs-literal\">null</span>,headers,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-net-post",
+            "title": "Net.post()",
+            "about": "Upspark's Net API module.",
+            "content": "<pre><code class=\"language-javascript\">Net.post(url,=,<span class=\"hljs-literal\">null</span>,form,=,<span class=\"hljs-literal\">null</span>,headers,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-net-request",
+            "title": "Net.request()",
+            "about": "Upspark's Net API module.",
+            "content": "<pre><code class=\"language-javascript\">Net.request(options,=,<span class=\"hljs-literal\">null</span>)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-runner",
+        "title": "Runner",
+        "about": "Upspark's Runner API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Runner <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/runner'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-runner-gettasks",
+            "title": "Runner.getTasks()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.getTasks()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-abort",
+            "title": "Runner.abort()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.abort(id)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-setcwd",
+            "title": "Runner.setCWD()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.setCWD(cwd)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-getcwd",
+            "title": "Runner.getCWD()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.getCWD()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-setenv",
+            "title": "Runner.setENV()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.setENV(key,value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-getenv",
+            "title": "Runner.getENV()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.getENV(key)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-show",
+            "title": "Runner.show()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.show()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-isvisible",
+            "title": "Runner.isVisible()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.isVisible()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-hide",
+            "title": "Runner.hide()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.hide()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-toggle",
+            "title": "Runner.toggle()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.toggle()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-runner-run",
+            "title": "Runner.run()",
+            "about": "Upspark's Runner API module.",
+            "content": "<pre><code class=\"language-javascript\">Runner.run(command,...args)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-safe",
+        "title": "Safe",
+        "about": "Upspark's Safe API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Safe <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/safe'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-safe-isunlocked",
+            "title": "Safe.isUnlocked()",
+            "about": "Upspark's Safe API module.",
+            "content": "<pre><code class=\"language-javascript\">Safe.isUnlocked()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-safe-lock",
+            "title": "Safe.lock()",
+            "about": "Upspark's Safe API module.",
+            "content": "<pre><code class=\"language-javascript\">Safe.lock()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-safe-unlock",
+            "title": "Safe.unlock()",
+            "about": "Upspark's Safe API module.",
+            "content": "<pre><code class=\"language-javascript\">Safe.unlock(password)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-safe-get",
+            "title": "Safe.get()",
+            "about": "Upspark's Safe API module.",
+            "content": "<pre><code class=\"language-javascript\">Safe.get(key,ifNotFound)\n</code></pre>",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "api-settings",
+        "title": "Settings",
+        "about": "Upspark's Settings API module.",
+        "content": "<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">import</span> Settings <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">'upspark/settings'</span>\n</code></pre>",
+        "children": [
+          {
+            "id": "api-settings-reload",
+            "title": "Settings.reload()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.reload(css)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setrotation",
+            "title": "Settings.setRotation()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setRotation(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setwidth",
+            "title": "Settings.setWidth()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setWidth(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setheight",
+            "title": "Settings.setHeight()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setHeight(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setscreen",
+            "title": "Settings.setScreen()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setScreen(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setx",
+            "title": "Settings.setX()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setX(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-sety",
+            "title": "Settings.setY()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setY(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setoffsetx",
+            "title": "Settings.setOffsetX()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setOffsetX(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setoffsety",
+            "title": "Settings.setOffsetY()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setOffsetY(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-sethotkey",
+            "title": "Settings.setHotkey()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setHotkey(value)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setlocation",
+            "title": "Settings.setLocation()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setLocation(x,y)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setsize",
+            "title": "Settings.setSize()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setSize(w,h)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setrunnercss",
+            "title": "Settings.setRunnerCSS()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setRunnerCSS(css,order)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setglobalcss",
+            "title": "Settings.setGlobalCSS()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setGlobalCSS(css,order)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setrunnertheme",
+            "title": "Settings.setRunnerTheme()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setRunnerTheme(theme)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-setglobaltheme",
+            "title": "Settings.setGlobalTheme()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.setGlobalTheme(theme)\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getsettings",
+            "title": "Settings.getSettings()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getSettings()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getglobalcss",
+            "title": "Settings.getGlobalCSS()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getGlobalCSS()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getrunnercss",
+            "title": "Settings.getRunnerCSS()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getRunnerCSS()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getrotation",
+            "title": "Settings.getRotation()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getRotation()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getsize",
+            "title": "Settings.getSize()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getSize()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getwidth",
+            "title": "Settings.getWidth()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getWidth()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getheight",
+            "title": "Settings.getHeight()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getHeight()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getlocation",
+            "title": "Settings.getLocation()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getLocation()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getx",
+            "title": "Settings.getX()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getX()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-gety",
+            "title": "Settings.getY()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getY()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getoffsetx",
+            "title": "Settings.getOffsetX()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getOffsetX()\n</code></pre>",
+            "children": []
+          },
+          {
+            "id": "api-settings-getoffsety",
+            "title": "Settings.getOffsetY()",
+            "about": "Upspark's Settings API module.",
+            "content": "<pre><code class=\"language-javascript\">Settings.getOffsetY()\n</code></pre>",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "tasks",
     "title": "Tasks",
     "about": "Upspark provides binds a few methods to the this object when executing ",
@@ -57,23 +935,23 @@
     ]
   },
   {
-    "id": "files",
-    "title": "Files",
-    "about": "Upspark will load certain files from the platform directory",
-    "content": "<p>Drinking vinegar PBR&amp;B subway tile, asymmetrical williamsburg live-edge chartreuse poutine. Direct trade yuccie stumptown offal, activated charcoal iPhone aesthetic gentrify pop-up skateboard quinoa. Kogi butcher sustainable, chia drinking vinegar offal marfa. Banh mi tattooed portland crucifix. Kitsch occupy yuccie, tumblr cray twee bicycle rights everyday carry letterpress fingerstache put a bird on it iPhone thundercats lomo. Pabst normcore ramps, small batch truffaut freegan tacos leggings bushwick pok pok beard butcher kale chips. Salvia hella marfa man bun, godard enamel pin four loko +1 man braid actually gochujang.</p>",
+    "id": "theme",
+    "title": "Theme",
+    "about": "Upspark provides access to the CSS rules applied to the runner",
+    "content": "<p>Upspark allows you to customize the runner interface with css.</p>\n<p>The best way to see the available selectors (e.g. <em>ids</em> + <em>classes</em>) is by running the <strong><a href=\"/documentation#system-dev\">:dev</a></strong> command. This will provide the chromium development tools.</p>",
     "children": [
       {
-        "id": "files-platform",
-        "title": "platform.js",
-        "about": "Upspark will target platform.js as the root module. Export all commands from this file.",
-        "content": "<p>Selfies hell of gluten-free single-origin coffee biodiesel tacos scenester, listicle cray street art you probably haven’t heard of them put a bird on it godard portland. Drinking vinegar offal fingerstache pork belly, PBR&amp;B occupy swag lyft affogato forage tofu fanny pack. Hashtag leggings locavore pour-over whatever, cold-pressed neutra sustainable tilde brunch wolf lo-fi synth meditation paleo. Godard poutine narwhal, semiotics humblebrag aesthetic bespoke banh mi la croix kickstarter squid 8-bit jean shorts flexitarian. Gastropub scenester wolf heirloom mustache kinfolk, affogato fixie man braid before they sold out master cleanse selvage sriracha. Vegan synth pork belly, kombucha vexillologist YOLO cold-pressed locavore you probably haven’t heard of them intelligentsia health goth tumblr sriracha try-hard. Shoreditch master cleanse irony, migas copper mug street art flannel messenger bag subway tile deep v leggings.</p>",
+        "id": "runner-css",
+        "title": "runner.css",
+        "about": "Upspark will optionally load a runner.css file if this exists. Use this to theme the runner.",
+        "content": "<p>When <strong>runner.css</strong> exists in the platform directory, Upspark will apply this CSS file to the runner’s look and feel.</p>\n<p>Note, <strong><a href=\"/documentation#system-reload\">:reload theme</a></strong> will reload this file.</p>\n<p>Here’s an example of the illuminated theme (white background).</p>\n<pre><code class=\"language-css\"><span class=\"hljs-selector-id\">#runner</span> {\n    <span class=\"hljs-attribute\">background</span>: <span class=\"hljs-built_in\">rgba</span>(255, 255, 255, 0.8);\n}\n\n<span class=\"hljs-selector-id\">#runner</span><span class=\"hljs-selector-class\">.runner-repl</span> {\n    <span class=\"hljs-attribute\">animation</span>: pulse <span class=\"hljs-number\">5s</span> infinite;\n}\n\n@<span class=\"hljs-keyword\">keyframes</span> pulse {\n    0% {\n        <span class=\"hljs-attribute\">background</span>: <span class=\"hljs-built_in\">rgba</span>(255, 255, 255, 0.8);\n    }\n    50% {\n        <span class=\"hljs-attribute\">background</span>: <span class=\"hljs-built_in\">rgba</span>(140, 140, 140, 0.7);\n    }\n    100% {\n        <span class=\"hljs-attribute\">background</span>: <span class=\"hljs-built_in\">rgba</span>(255, 255, 255, 0.8);\n    }\n}\n\n<span class=\"hljs-selector-class\">.command__title</span> {\n    <span class=\"hljs-attribute\">color</span>: <span class=\"hljs-built_in\">rgba</span>(0, 0, 0, 0.67);\n}\n<span class=\"hljs-selector-id\">#runner-path</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-id\">#runner-input</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-id\">#runner-debug</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.up-title</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.runner__output</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.runner__output</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.command__response</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-tag\">up-command-argument</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n\n<span class=\"hljs-selector-class\">.key</span><span class=\"hljs-selector-class\">.selected</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.key</span><span class=\"hljs-selector-class\">.selected</span><span class=\"hljs-selector-pseudo\">:hover</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n<span class=\"hljs-selector-class\">.key</span><span class=\"hljs-selector-pseudo\">:hover</span><span class=\"hljs-selector-pseudo\">:not(.selected)</span> {\n    <span class=\"hljs-attribute\">color</span>: black;\n}\n</code></pre>",
         "children": []
       },
       {
-        "id": "files-runner-css",
-        "title": "runner.css",
-        "about": "Upspark will optionally load a runner.css file if this exists. Use this to theme the runner.",
-        "content": "<p>Tilde pinterest thundercats, schlitz biodiesel vice man bun. Af bicycle rights crucifix, small batch four loko you probably haven’t heard of them neutra art party roof party austin. Blue bottle YOLO pabst, hashtag poutine man bun kickstarter tbh narwhal green juice. Vegan ugh semiotics williamsburg. Kickstarter ennui chambray 3 wolf moon hoodie franzen, biodiesel street art chia lomo seitan. Salvia vinyl beard unicorn, drinking vinegar chia hexagon kogi YOLO. Yr pickled jean shorts, fingerstache offal helvetica photo booth actually heirloom pabst enamel pin butcher pitchfork occupy bicycle rights.</p>",
+        "id": "global-css",
+        "title": "global.css",
+        "about": "Upspark will optionally load a global.css file if this exists. Use this to theme the interfaces.",
+        "content": "<p>When <strong>global.css</strong> exists in the platform directory, Upspark will apply this CSS file to the non-runner interface’s look and feel.</p>\n<ul>\n<li>Settings window</li>\n<li>Safe window</li>\n</ul>",
         "children": []
       }
     ]
