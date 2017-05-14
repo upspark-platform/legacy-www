@@ -1,10 +1,60 @@
 [
   {
-    "id": "commands",
-    "title": "Commands",
-    "about": "Upspark commands consist of any exported functions in the platform.js file.",
-    "content": "<p>Fanny pack swag selvage, YOLO hashtag tacos kale chips brunch gochujang plaid small batch readymade health goth. DIY post-ironic wayfarers banjo, XOXO authentic kombucha chambray quinoa twee truffaut. Hexagon salvia everyday carry thundercats. Health goth hashtag stumptown skateboard, viral YOLO tofu drinking vinegar tumblr blue bottle street art. Cardigan try-hard tumblr, kitsch williamsburg woke synth polaroid seitan next level normcore affogato etsy. Semiotics fixie chartreuse poke shoreditch salvia. Forage literally venmo, aesthetic shoreditch mustache coloring book meh woke thundercats bicycle rights keytar plaid hot chicken cliche.</p>",
-    "children": []
+    "id": "tasks",
+    "title": "Tasks",
+    "about": "Upspark provides binds a few methods to the this object when executing ",
+    "content": "<p>There are a few methods bound to the <strong>this</strong> object when executing tasks.</p>\n<p>Because of the nature of the <strong>this</strong> object, these methods can not be used within a fat arrow declaration of a task.</p>\n<p>This will work</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">background</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(<span class=\"hljs-string\">'Done'</span>), <span class=\"hljs-number\">1000</span>); <span class=\"hljs-comment\">// Fat arrow is okay in this case because the this scope is </span>\n\t\t\t\t\t\t\t<span class=\"hljs-comment\">// in the outer closure</span>\n}\n</code></pre>\n<p>This will not work (<em>this is not defined</em>)</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">const</span> background = <span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> {\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(<span class=\"hljs-string\">'Done'</span>), <span class=\"hljs-number\">1000</span>);\n}\n</code></pre>\n<p>Of-course, this drawback is only a drawback if your using these task functions!</p>",
+    "children": [
+      {
+        "id": "tasks-background",
+        "title": "task.background()",
+        "about": "The background action will let Upspark know that your task can not resolve yet.",
+        "content": "<p>The background method will flag your task execution as manually resolved.</p>\n<pre><code class=\"language-javascript\">task.background(isBackgroundTask = <span class=\"hljs-literal\">true</span>)\n</code></pre>\n<p>Your return value will be ignored and the only way to finish the task is by using <a href=\"/documentation#tasks-complete\">complete</a>, <a href=\"/documentation#tasks-abort\">abort</a> or <a href=\"/documentation#tasks-error\">error</a>.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(<span class=\"hljs-string\">'Done'</span>), <span class=\"hljs-number\">1000</span>);\n\n\t<span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">\"HELLO\"</span>; <span class=\"hljs-comment\">// ignored</span>\n}\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "tasks-abort",
+        "title": "task.abort()",
+        "about": "The abort action will end the child process holding the current task.",
+        "content": "<p>The abort method will end the current task, no questions asked.</p>\n<pre><code class=\"language-javascript\">task.abort(message = <span class=\"hljs-string\">''</span>, isNotError = <span class=\"hljs-literal\">false</span>)\n</code></pre>\n<p>Because each task is it’s own child process there’s no fear of background actions still being executed.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.abort()), <span class=\"hljs-number\">500</span>);\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(<span class=\"hljs-string\">'Done'</span>), <span class=\"hljs-number\">1000</span>); <span class=\"hljs-comment\">// Never executed</span>\n\t\n}\n</code></pre>\n<p>By default, it will throw a fatal error. Flag isNotError as true to indicate this was not an error.</p>",
+        "children": []
+      },
+      {
+        "id": "tasks-message",
+        "title": "task.message()",
+        "about": "The message action will append the argument to the task result.",
+        "content": "<p>The message method will append the argument to the task result.</p>\n<pre><code class=\"language-javascript\">task.message(type = <span class=\"hljs-string\">'out'</span> || <span class=\"hljs-string\">'error'</span>, message = <span class=\"hljs-string\">''</span>)\n</code></pre>\n<pre><code class=\"language-javascript\">task.message(message = <span class=\"hljs-string\">''</span>)\n</code></pre>\n<p>This is helpful for streaming results.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.message(<span class=\"hljs-string\">'A'</span>), <span class=\"hljs-number\">500</span>);\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.message(<span class=\"hljs-string\">'B'</span>), <span class=\"hljs-number\">1000</span>);\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.message(<span class=\"hljs-string\">'error'</span>, <span class=\"hljs-string\">'C'</span>), <span class=\"hljs-number\">1500</span>); \n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(), <span class=\"hljs-number\">2000</span>);\n}\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "tasks-log",
+        "title": "task.log()",
+        "about": "The log action will append the argument to the Upspark log.",
+        "content": "<p>The log method will append the argument to the <a href=\"/tutorial#logs\">log</a>.</p>\n<pre><code class=\"language-javascript\">task.message(message = <span class=\"hljs-string\">''</span>, error = <span class=\"hljs-literal\">false</span>)\n</code></pre>\n<p>Helpful for debugging issues.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.log(<span class=\"hljs-string\">\":-)\"</span>);\n\n\t<span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">\"Look in the log\"</span>;\n}\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "tasks-complete",
+        "title": "task.complete()",
+        "about": "The complete method will resolve and end the task.",
+        "content": "<p>The complete action will end a task and append the argument to the task output. (<em>a message and abort action</em>)</p>\n<pre><code class=\"language-javascript\">task.complete(message = <span class=\"hljs-string\">''</span>)\n</code></pre>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(<span class=\"hljs-string\">'Done'</span>), <span class=\"hljs-number\">1000</span>);\n}\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "tasks-error",
+        "title": "task.error()",
+        "about": "The error action will end the current task and display the argument as an error.",
+        "content": "<p>Just like the <a href=\"/documentation#tasks-complete\">complete</a> action, the abort action will end a task and append the argument to the task output as an error. (<em>an abort</em>)</p>\n<pre><code class=\"language-javascript\">task.error(message = <span class=\"hljs-string\">''</span>)\n</code></pre>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.error(<span class=\"hljs-string\">'Not done'</span>), <span class=\"hljs-number\">1000</span>);\n}\n</code></pre>",
+        "children": []
+      },
+      {
+        "id": "tasks-progress",
+        "title": "task.progress()",
+        "about": "The progress task will update the user with the current state of the task.",
+        "content": "<p>You can use the progress task to change the intermediate task progress bar to an actual progress bar with the provided progress.</p>\n<pre><code class=\"language-javascript\">task.progress(progress = <span class=\"hljs-number\">-1</span>, message = <span class=\"hljs-literal\">null</span>)\n</code></pre>\n<p>Additionally, the message will append to the history section instead of the task output. This is helpful for debugging.</p>\n<pre><code class=\"language-javascript\"><span class=\"hljs-keyword\">export</span> <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">task</span>(<span class=\"hljs-params\"></span>) </span>{\n\t<span class=\"hljs-keyword\">this</span>.background();\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.progress(<span class=\"hljs-number\">5</span>), <span class=\"hljs-number\">100</span>);\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.progress(<span class=\"hljs-number\">10</span>, <span class=\"hljs-string\">\"Working Hard!\"</span>), <span class=\"hljs-number\">200</span>);\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.progress(<span class=\"hljs-number\">60</span>), <span class=\"hljs-number\">300</span>);\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.progress(<span class=\"hljs-number\">80</span>, <span class=\"hljs-string\">\"Almost there!\"</span>), <span class=\"hljs-number\">400</span>);\n\n\tsetTimeout(<span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-keyword\">this</span>.complete(), <span class=\"hljs-number\">500</span>);\n}\n</code></pre>",
+        "children": []
+      }
+    ]
   },
   {
     "id": "files",
