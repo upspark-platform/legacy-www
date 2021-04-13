@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --config=./config/webpack.development.js --port=8080 --inline --hot",
-    "deploy": "rimraf dist && webpack --config=./config/webpack.production.js"
+    "deploy": "webpack --config=./config/webpack.production.js"
   },
   "api": {
     "development": "http://localhost:4567",
