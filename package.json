@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --config=./config/webpack.development.js --port=8080 --inline --hot",
-    "deploy": "webpack --config=./config/webpack.production.js 2>& /dev/null"
+    "deploy": "node bin/build.js"
   },
   "api": {
     "development": "http://localhost:4567",
@@ -48,6 +48,7 @@
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.3",
+    "shelljs": "^0.8.4",
     "style-loader": "^0.13.2",
     "to-string-loader": "^1.1.5",
     "typescript": "^2.2.1",
